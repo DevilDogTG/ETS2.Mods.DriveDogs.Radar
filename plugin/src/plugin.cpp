@@ -30,6 +30,9 @@ namespace {
 
 enum AuxTarget { AUX_FRONT = 0, AUX_ROOF = 1, AUX_COUNT = 2 };
 
+// frames a toggle button is held down (+1: the first-in-frame decrement happens before reporting)
+constexpr int k_press_frames = 4;
+
 struct State {
     scs_log_t log = nullptr;
     std::unique_ptr<ddradar::Detector> detector;
@@ -42,8 +45,9 @@ struct State {
     scs_timestamp_t last_time = 0;
     bool have_time = false;
 
-    // input device: pending press (down this frame, up next frame) per target
-    int press_stage[AUX_COUNT] = {0, 0};
+    // input device: frames left to hold each toggle button down (state is reported once per frame)
+    int hold_frames[AUX_COUNT] = {0, 0};
+    scs_u32_t next_input = AUX_COUNT;
     bool alert_logged = false;
 };
 
@@ -119,12 +123,13 @@ SCSAPI_VOID on_frame_start(const scs_event_t, const void *const event_info, cons
         g.alert_logged = alert;
     }
 
-    // POC: drive the front aux toggle; telemetry tells us when the game applied it.
-    const bool aux_on = g.aux[AUX_FRONT] != SCS_TELEMETRY_TRUCK_LIGHT_AUX_off ||
-                        g.aux[AUX_ROOF] != SCS_TELEMETRY_TRUCK_LIGHT_AUX_off;
-    if (g.aux_ctl.update(alert, aux_on, dt) && g.press_stage[AUX_FRONT] == 0) {
-        g.press_stage[AUX_FRONT] = 1;
-        g.press_stage[AUX_ROOF] = 1;
+    // Aux states: 0 off, 1 dimmed, 2 full; the toggle cycles, so AuxController keeps pressing (rate
+    // limited) until telemetry reports the wanted on/off state.
+    const bool aux_on = g.aux[AUX_FRONT] != 0 ||
+                        g.aux[AUX_ROOF] != 0;
+    if (g.aux_ctl.update(alert, aux_on, dt) && g.hold_frames[AUX_FRONT] == 0 && g.hold_frames[AUX_ROOF] == 0) {
+        g.hold_frames[AUX_FRONT] = k_press_frames;
+        g.hold_frames[AUX_ROOF] = k_press_frames;
     }
 }
 
@@ -135,25 +140,21 @@ const scs_input_device_input_t k_inputs[AUX_COUNT] = {
     {"aux_roof", "Aux toggle B (bind to roof aux lights)", SCS_VALUE_TYPE_bool},
 };
 
-SCSAPI_RESULT on_input_event(scs_input_event_t *const event_info, const scs_u32_t, const scs_context_t)
+SCSAPI_RESULT on_input_event(scs_input_event_t *const event_info, const scs_u32_t flags, const scs_context_t)
 {
-    // The game calls this repeatedly each frame until we return not_found.
-    for (scs_u32_t i = 0; i < AUX_COUNT; ++i) {
-        int &stage = g.press_stage[i];
-        if (stage == 1) {          // button down
-            event_info->input_index = i;
-            event_info->value.value_bool.value = 1;
-            stage = 2;
-            return SCS_RESULT_ok;
-        }
-        if (stage == 2) {          // button up (next call)
-            event_info->input_index = i;
-            event_info->value.value_bool.value = 0;
-            stage = 0;
-            return SCS_RESULT_ok;
-        }
+    // The game calls this repeatedly each frame until we return not_found. Like the SDK example we
+    // report every input's current state once per frame; a press is held for k_press_frames frames
+    // so the game reliably sees the down -> up edge of the toggle.
+    if (flags & SCS_INPUT_EVENT_CALLBACK_FLAG_first_in_frame) {
+        for (int &h : g.hold_frames)
+            if (h > 0) --h;
+        g.next_input = 0;
     }
-    return SCS_RESULT_not_found;
+    if (g.next_input >= AUX_COUNT) return SCS_RESULT_not_found;
+    event_info->input_index = g.next_input;
+    event_info->value_bool.value = g.hold_frames[g.next_input] > 0 ? 1 : 0;
+    ++g.next_input;
+    return SCS_RESULT_ok;
 }
 
 }  // namespace

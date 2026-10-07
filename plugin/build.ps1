@@ -6,7 +6,7 @@
   default build ..\output\plugin\ddradar.dll; needs the SCS Telemetry SDK unpacked so that
           plugin\sdk\include\scssdk.h exists (not committed - SCS licence)
 #>
-param([switch]$Test)
+param([switch]$Test, [switch]$Harness)
 $ErrorActionPreference = 'Stop'
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 $root = Split-Path -Parent $here
@@ -41,4 +41,13 @@ New-Item -ItemType Directory -Force (Join-Path $out 'ddradar') | Out-Null
 Invoke-Msvc ("cl /nologo /std:c++17 /EHsc /W4 /O2 /LD /I`"$sdk`" /Fo`"$obj/`" " +
     "/Fe`"$out\ddradar.dll`" `"$here\src\plugin.cpp`" /link /DEF:`"$here\src\ddradar.def`"")
 Copy-Item (Join-Path $root 'data\camera_db.csv') (Join-Path $out 'ddradar\camera_db.csv') -Force
+Copy-Item (Join-Path $here 'sdk\sdk_license.txt') (Join-Path $out 'ddradar\scs_sdk_license.txt') -Force
+Remove-Item (Join-Path $out 'ddradar.lib'), (Join-Path $out 'ddradar.exp') -ErrorAction SilentlyContinue
 Write-Host "built $out\ddradar.dll (+ ddradar\camera_db.csv)"
+
+if ($Harness) {
+    $exe = Join-Path $obj 'harness.exe'
+    Invoke-Msvc "cl /nologo /std:c++17 /EHsc /W4 /O2 /I`"$sdk`" /Fo`"$obj/`" /Fe`"$exe`" `"$here\tests\harness.cpp`""
+    & $exe (Join-Path $out 'ddradar.dll')
+    exit $LASTEXITCODE
+}
