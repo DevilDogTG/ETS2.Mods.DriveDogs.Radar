@@ -83,8 +83,9 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 | Camera scan (69 models) + DB (707) | ✅ done, `data/` |
 | Merged mod package | ✅ `output/drivedog_radar_v0.1.0-dev.1.scs`, all 70 patched PMGs verified (geometry identical, original locators kept) |
 | Cover image | ✅ `src/cover.jpg` (`tools/generate_cover.py`, World style) |
-| Plugin core + tests | ✅ written — ⛔ not compiled: VS "Desktop development with C++" workload missing (no STL/Windows SDK) |
-| Plugin SDK glue | ✅ written — ⛔ needs SCS Telemetry SDK headers in `plugin/sdk/include` |
+| Plugin core + unit tests | ✅ `plugin\build.ps1 -Test` passes (707 cameras, 30 Berlin) |
+| Plugin DLL (SDK 1.15) | ✅ `output/plugin/ddradar.dll`, zip `output/drivedog_radar_plugin_v0.1.0-dev.1.zip` |
+| End-to-end SDK harness | ✅ `plugin\build.ps1 -Harness`: fake game drives through a Berlin camera → aux on 350 m before, off 10 m after |
 | In-game test round 1 | Spike 1: tested the wrong model (Berlin = `speed_camera_ch`); Spike 2: unit mounts ✅, aux greyed ❌ |
 
 ## Test checklist — v0.1.0-dev.1 (one session)
@@ -105,7 +106,8 @@ mod folder and enable it (needs **Toys DLC** — POC unit body). Keep Garage-j1 
 - [ ] If still greyed: fit any roof-grill with aux lamps → does aux unlock and does the unit blink?
 
 **C. Plugin** (after the toolchain + SDK are available)
-- [ ] Copy `output/plugin/*` into `<game>\bin\win_x64\plugins\`; accept the SDK notice at start.
+- [ ] Unzip `drivedog_radar_plugin_v0.1.0-dev.1.zip` into `<game>\bin\win_x64\` (creates `plugins\ddradar.dll` +
+      `plugins\ddradar\camera_db.csv`); accept the "advanced SDK features" notice at game start.
 - [ ] `game.log.txt` shows `[ddradar] loaded 707 cameras`, `telemetry ready`, `input device registered`.
 - [ ] Options → Controls: bind *front aux* → "DriveDogs Radar / Aux toggle A" (and roof → B).
 - [ ] Drive towards a Berlin camera: log `camera ahead`, unit blinks ~350 m before, stops after passing.
@@ -119,7 +121,7 @@ Send `game.log.txt` + screenshots.
 | Q1 | Does the hidden `flare_vehicle aux` unlock the aux control? | test B |
 | Q2 | Does a `flare_blink light_type: aux` follow front, roof or both aux states? | test B |
 | Q3 | Strobe heuristic positions on 67 unverified models | test A + overrides |
-| Q4 | Plugin aux toggle: does a press go off→on directly or cycle through *dimmed*? (`AuxController` re-presses until telemetry says on) | test C |
+| Q4 | ~~Aux toggle cycles?~~ SDK docs: aux states 0 off / 1 dimmed / 2 full → toggle cycles; `AuxController` presses until telemetry matches (on = 1 press, off = 2 presses). Harness models this. | resolved |
 | Q5 | Map DB coverage: DLC sectors overriding base sectors in the merged extraction — any cameras missing? | test C on DLC maps |
 | Q6 | Truck def ids for DLC trucks lacking `accessory/set_lglass` folders (e.g. Scania S 2024e, DAF XF Electric) | map interior ↔ def ids |
 
@@ -134,9 +136,9 @@ Send `game.log.txt` + screenshots.
 
 - Python 3 + Pillow; `scs_packer` on `PATH` (already: `D:\Programs\ScsSoftwares\bin`).
 - Extracted base game: `D:\Repositories\ETS2\Extracted\base\<version>` (default 1.61.1.1).
-- **[MAINTAINER ACTION]** Visual Studio Installer → *Desktop development with C++* (MSVC + Windows SDK).
-- **[MAINTAINER ACTION / approval]** SCS Telemetry SDK (official, modding.scssoft.com) unpacked to
-  `plugin/sdk/` so `plugin/sdk/include/scssdk.h` exists.
+- Visual Studio *Desktop development with C++* (MSVC 14.51 + Windows SDK 10.0.26100) — installed 2026-10-07.
+- SCS SDK 1.15 (`https://download.eurotrucksimulator2.com/scs_sdk_1_15.zip`, MIT-style licence) unpacked to
+  `plugin/sdk/` (git-ignored); its licence ships with the plugin.
 
 ## Commands
 
@@ -147,6 +149,7 @@ python tools/generate_cover.py        # src/cover.jpg (reads VERSION)
 python tools/build_mod.py --version "$(cat VERSION)"
 ```
 ```powershell
-plugin\build.ps1 -Test                # core unit tests (needs C++ workload)
-plugin\build.ps1                      # ddradar.dll (needs C++ workload + SDK)
+plugin\build.ps1 -Test                # core unit tests
+plugin\build.ps1                      # output\plugin\ddradar.dll + ddradar\camera_db.csv
+plugin\build.ps1 -Harness             # build + end-to-end SDK harness
 ```
