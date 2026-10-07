@@ -84,14 +84,17 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 | Merged mod package | ✅ `output/drivedog_radar_v0.1.0-dev.1.scs`, all 70 patched PMGs verified (geometry identical, original locators kept) |
 | Cover image | ✅ `src/cover.jpg` (`tools/generate_cover.py`, World style) |
 | Plugin core + unit tests | ✅ `plugin\build.ps1 -Test` passes (707 cameras, 30 Berlin) |
-| Plugin DLL (SDK 1.15) | ✅ `output/plugin/ddradar.dll`, zip `output/drivedog_radar_plugin_v0.1.0-dev.1.zip` |
+| Plugin DLL (SDK 1.15) | ✅ `output/plugin/ddradar.dll`, zip `output/drivedog_radar_plugin_v<ver>.zip` |
 | End-to-end SDK harness | ✅ `plugin\build.ps1 -Harness`: fake game drives through a Berlin camera → aux on 350 m before, off 10 m after |
 | In-game test round 1 | Spike 1: tested the wrong model (Berlin = `speed_camera_ch`); Spike 2: unit mounts ✅, aux greyed ❌ |
+| In-game test round 2 (dev.1, log `202610072041`) | strobes flash ✅ but **camera meshes invisible** ❌; aux still greyed ❌; plugin detection ✅ (`camera ahead: speed_camera_ch at 293 m`) but input device rejected ❌ |
+| Fixes in v0.1.0-dev.2 | PMG rebuilt in standard layout (offsets shifted, indices end the file) · `electric_type: aux_light` on the unit · input display names without `( )` (harness now enforces SDK name rules) |
 
 ## Test checklist — v0.1.0-dev.1 (one session)
 
-Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs`; copy `drivedog_radar_v0.1.0-dev.1.scs` to the
-mod folder and enable it (needs **Toys DLC** — POC unit body). Keep Garage-j1 Radar disabled.
+Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
+`drivedog_radar_v0.1.0-dev.2.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
 - [ ] Berlin white pole camera (`speed_camera_ch`) strobes red, both directions?
@@ -106,7 +109,7 @@ mod folder and enable it (needs **Toys DLC** — POC unit body). Keep Garage-j1 
 - [ ] If still greyed: fit any roof-grill with aux lamps → does aux unlock and does the unit blink?
 
 **C. Plugin** (after the toolchain + SDK are available)
-- [ ] Unzip `drivedog_radar_plugin_v0.1.0-dev.1.zip` into `<game>\bin\win_x64\` (creates `plugins\ddradar.dll` +
+- [ ] Unzip `drivedog_radar_plugin_v0.1.0-dev.2.zip` into `<game>\bin\win_x64\` (creates `plugins\ddradar.dll` +
       `plugins\ddradar\camera_db.csv`); accept the "advanced SDK features" notice at game start.
 - [ ] `game.log.txt` shows `[ddradar] loaded 707 cameras`, `telemetry ready`, `input device registered`.
 - [ ] Options → Controls: bind *front aux* → "DriveDogs Radar / Aux toggle A" (and roof → B).
@@ -118,12 +121,21 @@ Send `game.log.txt` + screenshots.
 
 | # | Question | Resolve by |
 |---|---|---|
-| Q1 | Does the hidden `flare_vehicle aux` unlock the aux control? | test B |
+| Q1 | ~~Does the hidden `flare_vehicle aux` unlock the aux control?~~ No (round 2). Base aux lamps declare `electric_type: aux_light` (only on 27 `r_grill` accessories) → added to our unit; does it unlock from `set_lglass`, and front or roof? | test B (dev.2) |
 | Q2 | Does a `flare_blink light_type: aux` follow front, roof or both aux states? | test B |
 | Q3 | Strobe heuristic positions on 67 unverified models | test A + overrides |
 | Q4 | ~~Aux toggle cycles?~~ SDK docs: aux states 0 off / 1 dimmed / 2 full → toggle cycles; `AuxController` presses until telemetry matches (on = 1 press, off = 2 presses). Harness models this. | resolved |
 | Q5 | Map DB coverage: DLC sectors overriding base sectors in the merged extraction — any cameras missing? | test C on DLC maps |
 | Q6 | Truck def ids for DLC trucks lacking `accessory/set_lglass` folders (e.g. Scania S 2024e, DAF XF Electric) | map interior ↔ def ids |
+
+### Lessons from round 2
+
+- **PMG files must keep the converter layout.** Appending blocks after the index buffer kept every offset
+  valid, yet the game dropped the mesh (locators still worked). `Pmg.check_layout()` now guards the
+  layout and `with_locators()` shifts offsets instead.
+- **SDK input names are validated by the game** — a single bad character rejects the whole device.
+- Fallback if `electric_type` does not unlock aux: the F4 menu also has an always-available
+  *Dashboard backlight* toggle (no known flare `light_type` for it yet - investigate only if needed).
 
 ## Release blockers (not for POC)
 

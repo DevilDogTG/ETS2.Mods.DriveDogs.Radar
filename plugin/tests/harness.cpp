@@ -56,8 +56,30 @@ SCSAPI_RESULT unreg_channel(const scs_string_t name, const scs_u32_t, const scs_
     return SCS_RESULT_ok;
 }
 
+// SDK rules (scssdk_input_device.h): names [a-z0-9_]; display names English letters, digits,
+// underscore, space, dot. The game rejects the whole device otherwise (seen 2026-10-07).
+bool valid_name(const char *s)
+{
+    for (; *s; ++s)
+        if (!((*s >= 'a' && *s <= 'z') || (*s >= '0' && *s <= '9') || *s == '_')) return false;
+    return true;
+}
+bool valid_display(const char *s)
+{
+    for (; *s; ++s)
+        if (!(isalnum(static_cast<unsigned char>(*s)) || *s == '_' || *s == ' ' || *s == '.')) return false;
+    return true;
+}
+
 SCSAPI_RESULT reg_device(const scs_input_device_t *const info)
 {
+    bool ok = valid_name(info->name) && valid_display(info->display_name);
+    for (scs_u32_t i = 0; i < info->input_count; ++i)
+        ok = ok && valid_name(info->inputs[i].name) && valid_display(info->inputs[i].display_name);
+    if (!ok) {
+        std::printf("  game.log: <ERROR> [sdk] input_register_device: invalid name/display_name\n");
+        return SCS_RESULT_invalid_parameter;
+    }
     device = *info;
     device_inputs.assign(info->inputs, info->inputs + info->input_count);
     device.inputs = device_inputs.data();

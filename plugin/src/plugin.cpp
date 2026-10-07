@@ -136,8 +136,9 @@ SCSAPI_VOID on_frame_start(const scs_event_t, const void *const event_info, cons
 // ---------------------------------------------------------------- input device
 
 const scs_input_device_input_t k_inputs[AUX_COUNT] = {
-    {"aux_front", "Aux toggle A (bind to front aux lights)", SCS_VALUE_TYPE_bool},
-    {"aux_roof", "Aux toggle B (bind to roof aux lights)", SCS_VALUE_TYPE_bool},
+    // display names: only English letters, digits, underscore, space and dot are accepted
+    {"aux_front", "Aux toggle A", SCS_VALUE_TYPE_bool},
+    {"aux_roof", "Aux toggle B", SCS_VALUE_TYPE_bool},
 };
 
 SCSAPI_RESULT on_input_event(scs_input_event_t *const event_info, const scs_u32_t flags, const scs_context_t)

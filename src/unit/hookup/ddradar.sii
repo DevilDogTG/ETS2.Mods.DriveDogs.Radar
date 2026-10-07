@@ -52,8 +52,8 @@ flare_blink : ddradar.cab_blink
 	state_change_duration: 0.083
 }
 
-# Hidden aux emitter (no flare model, near-zero light) so the truck reports an aux light and the
-# aux control is enabled (POC hypothesis - see docs/POC-PLAN.md).
+# Hidden aux emitter (no flare model, near-zero light). Not enough on its own to enable the aux
+# control (test 2026-10-07); the accessory def also declares `electric_type: aux_light`.
 flare_vehicle : ddradar.cab_aux
 {
 	dir_type: wide

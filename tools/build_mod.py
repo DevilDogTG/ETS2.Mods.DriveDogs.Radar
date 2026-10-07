@@ -83,6 +83,7 @@ accessory_addon_data : ddradar.{truck}.set_lglass
 	unlock: 0
 	icon: "gps.dlc_toys"
 	part_type: aftermarket
+	electric_type: aux_light
 
 	interior_model: "/{CAB_UNIT_DST}.pmd"
 	exterior_model: "/{CAB_UNIT_DST}.pmd"
