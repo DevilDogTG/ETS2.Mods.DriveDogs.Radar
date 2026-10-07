@@ -198,6 +198,11 @@ def main():
         fh.write(Pmg.load(os.path.join(args.base, CAB_UNIT_SRC + ".pmg")).with_locators(AUX_PART_LOCATORS))
     aux_trucks = write_aux_parts(args.base, stage)
 
+    # one unknown attribute makes the game drop a whole .sii file (round 5) - never pack that
+    lint = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "lint_units.py"), "--base", args.base])
+    if lint.returncode:
+        sys.exit("lint failed - package not built")
+
     out_dir = os.path.join(ROOT, "output")
     os.makedirs(out_dir, exist_ok=True)
     package = os.path.join(out_dir, f"drivedog_radar_v{args.version}.scs")

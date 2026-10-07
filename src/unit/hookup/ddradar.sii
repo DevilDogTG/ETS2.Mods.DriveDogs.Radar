@@ -71,7 +71,8 @@ flare_vehicle : ddradar.cab_aux
 
 # ---- TEST (dev.4) cab flare variants: round 4 showed nothing in the cab with roof aux on.
 # Visuals copied from base vehicle beacons (amplified flare model, fake_interior_offset), which do show
-# from inside the cab.
+# from inside the cab. fake_interior_offset exists only on flare_blink / beacon_vehicle - on
+# flare_vehicle it fails the whole file (round 5), so variant D goes without it.
 flare_blink : ddradar.cab_test_a
 {
 	dir_type: wide
@@ -139,6 +140,5 @@ flare_vehicle : ddradar.cab_test_d
 	model: "/model/flare/uniform_red_amplified.pmd"
 	default_scale: 0.632
 	scale_factor: 3
-	fake_interior_offset: 1.5
 }
 }

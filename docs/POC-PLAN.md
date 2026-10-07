@@ -90,12 +90,13 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 | In-game test round 2 (dev.1, log `202610072041`) | strobes flash ✅ but **camera meshes invisible** ❌; aux still greyed ❌; plugin detection ✅ (`camera ahead: speed_camera_ch at 293 m`) but input device rejected ❌ |
 | In-game test round 3 (dev.2, log `202610072108`) | camera meshes back + strobing ✅; plugin input device registered ✅; unit fitted ✅; aux still greyed ❌ |
 | In-game test round 4 (dev.3, log `202610072131`) | **roof aux enabled** by the r_grill TEST part ✅ (switched on); windshield unit shows **no flare at all** ❌ |
+| In-game test round 5 (dev.4, log `202610072150`) | **whole hookup file rejected** (`flare_vehicle` has no `fake_interior_offset`) → no strobes, aux greyed ❌ — fixed in dev.5 + build-time lint |
 | Fixes in v0.1.0-dev.2 | PMG rebuilt in standard layout (offsets shifted, indices end the file) · `electric_type: aux_light` on the unit · input display names without `( )` (harness now enforces SDK name rules) |
 
 ## Test checklist — v0.1.0-dev.1 (one session)
 
 Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
-`drivedog_radar_v0.1.0-dev.4.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+`drivedog_radar_v0.1.0-dev.5.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
 Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
@@ -104,7 +105,7 @@ Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference
 - [ ] Note any camera with a misplaced/absent strobe (country + screenshot) → fix via `placement_overrides.json`.
 - [ ] Still fined when speeding? Models look normal (no missing textures)?
 
-**B. Windshield unit + aux** (dev.4)
+**B. Windshield unit + aux** (dev.5)
 - [x] r_grill "DriveDogs aux circuit TEST" enables **roof aux** (round 4).
 - [ ] Keep it fitted. In the windshield slot try "DriveDogs Radar detector TEST A", B, C, D in turn
       (engine off → on for C). For each: roof aux off / on → flare visible? blinking? (day + night shot)
@@ -165,6 +166,13 @@ dev.4 test matrix (all on the GPS body, roof aux TEST part fitted):
 
 Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
 
+### Lesson from round 5
+
+- **The game drops a whole `.sii` file on the first unknown attribute.** All flare units live in
+  `unit/hookup/ddradar.sii`, so one bad attribute disabled every strobe and the aux emitter.
+  `tools/lint_units.py` (run by `build_mod.py`, blocks packing) checks every unit attribute against what
+  base data uses on that class, plus a small `PROVEN` allowlist.
+
 ### Lessons from round 2
 
 - **PMG files must keep the converter layout.** Appending blocks after the index buffer kept every offset
@@ -195,7 +203,7 @@ Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner
 python tools/scan_cameras.py          # data/cameras.json
 python tools/extract_camera_db.py     # data/camera_db.csv
 python tools/generate_cover.py        # src/cover.jpg (reads VERSION)
-python tools/build_mod.py --version "$(cat VERSION)"
+python tools/build_mod.py --version "$(cat VERSION)"   # runs tools/lint_units.py first
 ```
 ```powershell
 plugin\build.ps1 -Test                # core unit tests
