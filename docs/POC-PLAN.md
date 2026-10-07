@@ -89,12 +89,13 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 | In-game test round 1 | Spike 1: tested the wrong model (Berlin = `speed_camera_ch`); Spike 2: unit mounts ✅, aux greyed ❌ |
 | In-game test round 2 (dev.1, log `202610072041`) | strobes flash ✅ but **camera meshes invisible** ❌; aux still greyed ❌; plugin detection ✅ (`camera ahead: speed_camera_ch at 293 m`) but input device rejected ❌ |
 | In-game test round 3 (dev.2, log `202610072108`) | camera meshes back + strobing ✅; plugin input device registered ✅; unit fitted ✅; aux still greyed ❌ |
+| In-game test round 4 (dev.3, log `202610072131`) | **roof aux enabled** by the r_grill TEST part ✅ (switched on); windshield unit shows **no flare at all** ❌ |
 | Fixes in v0.1.0-dev.2 | PMG rebuilt in standard layout (offsets shifted, indices end the file) · `electric_type: aux_light` on the unit · input display names without `( )` (harness now enforces SDK name rules) |
 
 ## Test checklist — v0.1.0-dev.1 (one session)
 
 Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
-`drivedog_radar_v0.1.0-dev.3.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+`drivedog_radar_v0.1.0-dev.4.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
 Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
@@ -103,10 +104,10 @@ Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference
 - [ ] Note any camera with a misplaced/absent strobe (country + screenshot) → fix via `placement_overrides.json`.
 - [ ] Still fined when speeding? Models look normal (no missing textures)?
 
-**B. Windshield unit + aux** (dev.3)
-- [ ] Fit "DriveDogs aux circuit TEST" in the **roof grill** slot (replaces the roof grill for the test).
-- [ ] F4 → is **roof** (or front) aux now enabled? Toggle it → does the windshield unit blink?
-- [ ] If not: fit a real roof grill with aux lamps instead → aux enabled? unit blinks?
+**B. Windshield unit + aux** (dev.4)
+- [x] r_grill "DriveDogs aux circuit TEST" enables **roof aux** (round 4).
+- [ ] Keep it fitted. In the windshield slot try "DriveDogs Radar detector TEST A", B, C, D in turn
+      (engine off → on for C). For each: roof aux off / on → flare visible? blinking? (day + night shot)
 - [ ] Fit "DriveDogs Radar detector" (windshield left glass slot).
 - [ ] F4 → Lights: aux now enabled? (front / roof / both)
 - [ ] Bind a key to that aux, toggle → unit blinks red; off → stops.
@@ -147,6 +148,20 @@ Decision tree after the test:
 | TEST part unlocks **roof aux** and the windshield unit blinks with it | build a near-invisible aux-circuit model → ship it as the plugin companion part (costs the roof-grill slot) |
 | TEST part does nothing, but a **real** aux roof grill unlocks it and the unit blinks | aux needs real lamps: either accept real lamps lighting near cameras, or dig into what the engine keys on (model flares vs slot) |
 | Even real aux lamps don't make the unit blink | `flare_blink light_type: aux` doesn't follow aux in a cab part → rethink the indicator (e.g. exterior part visible through the windshield) |
+
+Round 4: row 1 half true - the r_grill part unlocks **roof aux**, but the cab flare never appears.
+Base *does* put vehicle flares in interior models (beacons, sun visors incl. `flare.vehicle.aux_light` in
+`sunshield_10_bc_int`), so it is our flare definition. Base cab-visible flares use the amplified model at
+~0.63 x 3 scale and `fake_interior_offset: 1.5`; ours used 0.15 scale, no offset.
+
+dev.4 test matrix (all on the GPS body, roof aux TEST part fitted):
+
+| Variant | Hookup | Tells us |
+|---|---|---|
+| A | `flare_blink`, aux, amplified + `fake_interior_offset`, faces driver | fixed visuals enough? |
+| B | same as A, faces forward (like base interior beacons) | orientation |
+| C | `flare_blink`, **electrics** (always on) | does a cab flare render at all |
+| D | `flare_vehicle` (steady), aux | does aux drive a cab flare (without blink) |
 
 Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
 

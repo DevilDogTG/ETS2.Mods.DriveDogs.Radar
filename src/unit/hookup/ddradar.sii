@@ -68,4 +68,77 @@ flare_vehicle : ddradar.cab_aux
 	inner_angle: 5
 	outer_angle: 10
 }
+
+# ---- TEST (dev.4) cab flare variants: round 4 showed nothing in the cab with roof aux on.
+# Visuals copied from base vehicle beacons (amplified flare model, fake_interior_offset), which do show
+# from inside the cab.
+flare_blink : ddradar.cab_test_a
+{
+	dir_type: wide
+	blink_pattern: "X-X-XXX-----------"
+	blink_step_length: 0.06
+
+	light_type: aux
+
+	type: spot
+	setup: candela_hue_saturation
+	diffuse_color: (60, 0, 100)
+	specular_color: (60, 0, 100)
+	range: 2.0
+	forward_distance: false
+	inner_angle: 30
+	outer_angle: 120
+
+	model: "/model/flare/uniform_red_amplified.pmd"
+	default_scale: 0.632
+	scale_factor: 3
+	fake_interior_offset: 1.5
+
+	state_change_duration: 0.083
+}
+
+flare_blink : ddradar.cab_test_c
+{
+	dir_type: wide
+	blink_pattern: "X-X-XXX-----------"
+	blink_step_length: 0.06
+
+	light_type: electrics
+
+	type: spot
+	setup: candela_hue_saturation
+	diffuse_color: (60, 0, 100)
+	specular_color: (60, 0, 100)
+	range: 2.0
+	forward_distance: false
+	inner_angle: 30
+	outer_angle: 120
+
+	model: "/model/flare/uniform_red_amplified.pmd"
+	default_scale: 0.632
+	scale_factor: 3
+	fake_interior_offset: 1.5
+
+	state_change_duration: 0.083
+}
+
+flare_vehicle : ddradar.cab_test_d
+{
+	dir_type: wide
+	light_type: aux
+
+	type: spot
+	setup: candela_hue_saturation
+	diffuse_color: (60, 0, 100)
+	specular_color: (60, 0, 100)
+	range: 2.0
+	forward_distance: false
+	inner_angle: 30
+	outer_angle: 120
+
+	model: "/model/flare/uniform_red_amplified.pmd"
+	default_scale: 0.632
+	scale_factor: 3
+	fake_interior_offset: 1.5
+}
 }

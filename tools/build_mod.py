@@ -45,6 +45,15 @@ CAB_LOCATORS = [
 # part copies that pattern in the r_grill slot. Body is the POC GPS box (visible on the roof) until a
 # real near-invisible model exists.
 AUX_PART_DST = "vehicle/truck/upgrade/ddradar/aux_circuit"
+
+# TEST (dev.4): round 4 showed no cab flare at all with roof aux on. Variants (suffix, hookup unit,
+# locator orientation) on the same GPS body narrow down why; see src/unit/hookup/ddradar.sii.
+CAB_TEST_VARIANTS = [
+    ("A", "ddradar.cab_test_a", FACE_POS_Z),   # blink, aux, amplified + fake_interior_offset, faces driver
+    ("B", "ddradar.cab_test_a", FACE_NEG_Z),   # same unit, faces forward like base interior beacons
+    ("C", "ddradar.cab_test_c", FACE_POS_Z),   # blink, electrics (on with ignition): renders at all?
+    ("D", "ddradar.cab_test_d", FACE_POS_Z),   # steady flare_vehicle, aux: does aux drive it?
+]
 AUX_PART_LOCATORS = [("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "ddradar.cab_aux")]
 
 
@@ -100,28 +109,34 @@ accessory_addon_data : ddradar_aux.{truck}.r_grill
     return trucks
 
 
-def write_accessories(base, stage):
-    """One windshield (set_lglass) accessory per truck that defines the slot."""
+def write_accessories(base, stage, variants):
+    """Windshield (set_lglass) accessories per truck that defines the slot.
+
+    variants: [(suffix, model)] - suffix "" is the unit itself, others are TEST variants.
+    """
     trucks_dir = os.path.join(base, "def", "vehicle", "truck")
     trucks = sorted(t for t in os.listdir(trucks_dir)
                     if os.path.isdir(os.path.join(trucks_dir, t, "accessory", "set_lglass")))
     for truck in trucks:
         d = os.path.join(stage, "def", "vehicle", "truck", truck, "accessory", "set_lglass")
         os.makedirs(d, exist_ok=True)
-        with open(os.path.join(d, "ddradar.sii"), "w", newline="\n") as fh:
-            fh.write(f"""SiiNunit
+        for suffix, model in variants:
+            unit = "ddradar" + suffix.lower()
+            label = f" TEST {suffix}" if suffix else ""
+            with open(os.path.join(d, f"{unit}.sii"), "w", newline="\n") as fh:
+                fh.write(f"""SiiNunit
 {{
-accessory_addon_data : ddradar.{truck}.set_lglass
+accessory_addon_data : {unit}.{truck}.set_lglass
 {{
-	name: "DriveDogs Radar detector"
+	name: "DriveDogs Radar detector{label}"
 	price: 450
 	unlock: 0
 	icon: "gps.dlc_toys"
 	part_type: aftermarket
 	electric_type: aux_light
 
-	interior_model: "/{CAB_UNIT_DST}.pmd"
-	exterior_model: "/{CAB_UNIT_DST}.pmd"
+	interior_model: "/{model}.pmd"
+	exterior_model: "/{model}.pmd"
 }}
 }}
 """)
@@ -167,7 +182,15 @@ def main():
     shutil.copy(os.path.join(args.base, CAB_UNIT_SRC + ".pmd"), cab_dst + ".pmd")
     with open(cab_dst + ".pmg", "wb") as fh:
         fh.write(Pmg.load(os.path.join(args.base, CAB_UNIT_SRC + ".pmg")).with_locators(CAB_LOCATORS))
-    trucks = write_accessories(args.base, stage)
+    gps_pmg = Pmg.load(os.path.join(args.base, CAB_UNIT_SRC + ".pmg"))
+    variants = [("", CAB_UNIT_DST)]
+    for suffix, hookup, quat in CAB_TEST_VARIANTS:
+        model = f"{CAB_UNIT_DST}_test_{suffix.lower()}"
+        shutil.copy(os.path.join(args.base, CAB_UNIT_SRC + ".pmd"), os.path.join(stage, model + ".pmd"))
+        with open(os.path.join(stage, model + ".pmg"), "wb") as fh:
+            fh.write(gps_pmg.with_locators([("ddr_cab0", CAB_LOCATORS[0][1], quat, hookup), CAB_LOCATORS[1]]))
+        variants.append((suffix, model))
+    trucks = write_accessories(args.base, stage, variants)
 
     aux_dst = os.path.join(stage, AUX_PART_DST)
     shutil.copy(os.path.join(args.base, CAB_UNIT_SRC + ".pmd"), aux_dst + ".pmd")
