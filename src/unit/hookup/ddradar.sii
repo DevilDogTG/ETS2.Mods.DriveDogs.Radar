@@ -1,0 +1,71 @@
+SiiNunit
+{
+# Strobe on every fining speed camera model (locators injected by tools/build_mod.py). Always on.
+flare_blink : ddradar.blink
+{
+	dir_type: wide
+	blink_pattern: "X-X-XXX-----------"
+	blink_step_length: 0.06
+
+	light_type: police_hooter
+
+	type: spot
+	setup: candela_hue_saturation
+	diffuse_color: (200, 0, 100)
+	specular_color: (200, 0, 100)
+	range: 25
+	forward_distance: false
+	inner_angle: 5
+	outer_angle: 90
+	fade_distance: 100
+	fade_span: 50
+
+	model: "/model/flare/uniform_red_amplified.pmd"
+	default_scale: 1.35
+	scale_factor: 3
+
+	state_change_duration: 0.083
+}
+
+# Windshield detector indicator: blinks police-style only while the truck's aux light state is on.
+flare_blink : ddradar.cab_blink
+{
+	dir_type: wide
+	blink_pattern: "X-X-XXX-----------"
+	blink_step_length: 0.06
+
+	light_type: aux
+
+	type: spot
+	setup: candela_hue_saturation
+	diffuse_color: (20, 0, 100)
+	specular_color: (20, 0, 100)
+	range: 1.5
+	forward_distance: false
+	inner_angle: 30
+	outer_angle: 120
+
+	model: "/model/flare/uniform_red.pmd"
+	default_scale: 0.15
+	scale_factor: 1
+
+	state_change_duration: 0.083
+}
+
+# Hidden aux emitter (no flare model, near-zero light) so the truck reports an aux light and the
+# aux control is enabled (POC hypothesis - see docs/POC-PLAN.md).
+flare_vehicle : ddradar.cab_aux
+{
+	dir_type: wide
+	light_type: aux
+
+	type: spot
+	setup: candela_hue_saturation
+	diffuse_color: (0.01, 0, 0)
+	specular_color: (0.01, 0, 0)
+	range: 0.05
+	forward_distance: false
+	inner_angle: 5
+	outer_angle: 10
+}
+}
