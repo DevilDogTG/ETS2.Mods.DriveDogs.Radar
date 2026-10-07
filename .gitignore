@@ -1,0 +1,7 @@
+# build products
+build/
+output/
+__pycache__/
+
+# SCS Telemetry SDK (SCS licence - unpack locally, never commit)
+plugin/sdk/

@@ -1,0 +1,2396 @@
+{
+ "base": "1.61.1.1",
+ "cameras": [
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw2_cam_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      7.941,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.667,
+    -0.209,
+    -2.517
+   ],
+   "bbox_max": [
+    16.138,
+    9.648,
+    2.506
+   ],
+   "sign_units": [
+    "sign.lux_2p00v"
+   ]
+  },
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw2_two_way_cam_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      8.273,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.038,
+    -0.209,
+    -2.517
+   ],
+   "bbox_max": [
+    16.138,
+    9.648,
+    2.496
+   ],
+   "sign_units": [
+    "sign.lux_2p00z"
+   ]
+  },
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw3_cam_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      9.956,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.667,
+    -0.209,
+    -2.517
+   ],
+   "bbox_max": [
+    20.638,
+    9.648,
+    2.506
+   ],
+   "sign_units": [
+    "sign.lux_2p00w"
+   ]
+  },
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw3_two_way_cam_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      10.114,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.038,
+    -0.209,
+    -2.517
+   ],
+   "bbox_max": [
+    20.638,
+    9.648,
+    2.496
+   ],
+   "sign_units": [
+    "sign.lux_2p010"
+   ]
+  },
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw4_cam_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      10.008,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.667,
+    -0.209,
+    -2.512
+   ],
+   "bbox_max": [
+    25.138,
+    9.648,
+    2.506
+   ],
+   "sign_units": [
+    "sign.lux_2p00x"
+   ]
+  },
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw4_two_way_cam_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      15.264,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.038,
+    -0.2,
+    -2.512
+   ],
+   "bbox_max": [
+    25.138,
+    9.648,
+    2.501
+   ],
+   "sign_units": [
+    "sign.lux_2p011"
+   ]
+  },
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw5_cam_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      14.505,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.667,
+    -0.209,
+    -2.512
+   ],
+   "bbox_max": [
+    29.638,
+    9.648,
+    2.506
+   ],
+   "sign_units": [
+    "sign.lux_2p00y"
+   ]
+  },
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw5_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      14.505,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.667,
+    -0.209,
+    -2.512
+   ],
+   "bbox_max": [
+    29.638,
+    9.648,
+    2.506
+   ],
+   "sign_units": [
+    "sign.lux_2p00k"
+   ]
+  },
+  {
+   "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw5_two_way_cam_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      16.042,
+      0.0,
+      -30.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.038,
+    -0.2,
+    -2.512
+   ],
+   "bbox_max": [
+    29.638,
+    9.648,
+    2.501
+   ],
+   "sign_units": [
+    "sign.lux_2p012"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/blkw/ba/ba_speed_camera",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      0.0,
+      0.027,
+      0.096
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.225,
+    -0.391,
+    -0.186
+   ],
+   "bbox_max": [
+    0.225,
+    3.415,
+    0.335
+   ],
+   "sign_units": [
+    "sign.blkw_370o8"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/blkw/hr/hr_speed_camera",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      0.0,
+      0.027,
+      0.096
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.225,
+    -0.397,
+    -0.186
+   ],
+   "bbox_max": [
+    0.225,
+    3.365,
+    0.335
+   ],
+   "sign_units": [
+    "sign.blkw_370o9"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/blkw/hr/hr_speed_camera_v2",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.0,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0025,
+      0.0001,
+      1.0,
+      0.0004
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.489,
+    11.429,
+    -0.158
+   ],
+   "bbox_max": [
+    0.137,
+    12.203,
+    0.326
+   ],
+   "sign_units": [
+    "sign.blkw_370oa"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/blkw/hr/hr_speed_camera_v3",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -10.0,
+      0.039,
+      0.097
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -1.693,
+    3.891,
+    -0.419
+   ],
+   "bbox_max": [
+    0.3,
+    5.21,
+    0.673
+   ],
+   "sign_units": [
+    "sign.blkw_370ob"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/blkw/rs/rs_speed_camera",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      0.0,
+      0.027,
+      0.096
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.243,
+    -0.537,
+    -0.205
+   ],
+   "bbox_max": [
+    0.315,
+    4.893,
+    0.293
+   ],
+   "sign_units": [
+    "sign.blkw_370o6"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/blkw/rs/rs_speed_camera_hw",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      7.999,
+      0.025,
+      0.155
+     ],
+     "quat": [
+      0.0025,
+      0.0001,
+      1.0,
+      0.0004
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.999,
+      0.029,
+      -0.165
+     ],
+     "quat": [
+      1.0,
+      0.0004,
+      -0.0025,
+      -0.0001
+     ]
+    }
+   ],
+   "bbox_min": [
+    -1.455,
+    8.003,
+    -0.313
+   ],
+   "bbox_max": [
+    1.46,
+    8.903,
+    0.327
+   ],
+   "sign_units": [
+    "sign.blkw_370o7"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/blkw/si/si_speed_camera",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      0.0,
+      0.027,
+      0.096
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.225,
+    -0.0,
+    -0.236
+   ],
+   "bbox_max": [
+    0.225,
+    3.015,
+    0.285
+   ],
+   "sign_units": [
+    "sign.blkw_370mb"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/ch/speed_camera_ch",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      0.514,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.299,
+    -0.159,
+    -0.299
+   ],
+   "bbox_max": [
+    0.784,
+    3.47,
+    0.307
+   ],
+   "sign_units": [
+    "sign.ch_37007"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/ch/speed_camera_v2_ch",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      1.8,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0025,
+      0.0001,
+      1.0,
+      0.0004
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.374,
+    -0.208,
+    -0.374
+   ],
+   "bbox_max": [
+    1.262,
+    8.745,
+    0.374
+   ],
+   "sign_units": [
+    "sign.ch_37008"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/ch/speed_camera_v3_ch",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      1.8,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0025,
+      0.0001,
+      1.0,
+      0.0004
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.374,
+    -0.208,
+    -0.374
+   ],
+   "bbox_max": [
+    0.376,
+    8.745,
+    0.374
+   ],
+   "sign_units": [
+    "sign.ch_37009"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/de/3lane_speedlimit_100_no_overtaking_trucks_60_sc",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      9.561,
+      0.0,
+      4.441
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.79,
+    -1.384,
+    -1.243
+   ],
+   "bbox_max": [
+    21.009,
+    11.339,
+    0.798
+   ],
+   "sign_units": [
+    "sign.1835"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/gr/speedcamera_v01_gr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -42.692
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.518,
+    -0.181,
+    -0.619
+   ],
+   "bbox_max": [
+    0.227,
+    3.203,
+    0.297
+   ],
+   "sign_units": [
+    "sign.greece_5g02l"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/gr/speedcamera_v02_gr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.183,
+    -0.144,
+    -0.354
+   ],
+   "bbox_max": [
+    0.183,
+    3.041,
+    0.386
+   ],
+   "sign_units": [
+    "sign.greece_5g02m"
+   ]
+  },
+  {
+   "model": "model/sign/traffic/gr/speedcamera_v03_gr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.183,
+    -0.144,
+    -0.216
+   ],
+   "bbox_max": [
+    0.183,
+    2.815,
+    0.294
+   ],
+   "sign_units": [
+    "sign.greece_5g02n"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_city_dk",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.365,
+    -0.681,
+    -0.471
+   ],
+   "bbox_max": [
+    0.42,
+    4.151,
+    0.409
+   ],
+   "sign_units": [
+    "sign.1496"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw3_tr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      9.964,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -1.327,
+    -3.404,
+    -0.97
+   ],
+   "bbox_max": [
+    20.658,
+    10.877,
+    1.024
+   ],
+   "sign_units": [
+    "sign.blke_427"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_3lane_fr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      -10.557,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      10.807,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -21.031,
+    -0.509,
+    -1.789
+   ],
+   "bbox_max": [
+    21.031,
+    11.536,
+    1.856
+   ],
+   "sign_units": [
+    "sign.1766"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_au",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      8.158,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.717,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -17.736,
+    -0.203,
+    -9.092
+   ],
+   "bbox_max": [
+    17.736,
+    10.657,
+    8.973
+   ],
+   "sign_units": [
+    "sign.1044"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_ch",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.825,
+      0.0,
+      -0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.595,
+    -0.09,
+    -0.261
+   ],
+   "bbox_max": [
+    0.723,
+    3.567,
+    4.006
+   ],
+   "sign_units": [
+    "sign.1046"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_cz",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.267,
+      0.027,
+      -0.096
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -4.141,
+    -0.526,
+    -0.325
+   ],
+   "bbox_max": [
+    0.223,
+    8.943,
+    0.423
+   ],
+   "sign_units": [
+    "sign.1011"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_de",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.301,
+      0.0,
+      -0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -7.713,
+    -0.732,
+    -1.794
+   ],
+   "bbox_max": [
+    1.252,
+    13.105,
+    1.01
+   ],
+   "sign_units": [
+    "sign.1012"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_dk",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      8.152,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -8.335,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -17.825,
+    -2.772,
+    -0.796
+   ],
+   "bbox_max": [
+    17.821,
+    9.381,
+    0.795
+   ],
+   "sign_units": [
+    "sign.1479"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_fr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      8.266,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      -8.289,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -16.967,
+    -0.509,
+    -1.895
+   ],
+   "bbox_max": [
+    16.967,
+    11.536,
+    1.856
+   ],
+   "sign_units": [
+    "sign.1045"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_hu",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      8.01,
+      0.027,
+      -0.096
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.342,
+    -0.139,
+    -0.458
+   ],
+   "bbox_max": [
+    0.33,
+    2.233,
+    0.467
+   ],
+   "sign_units": [
+    "sign.1158"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_it",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      0.0,
+      0.0,
+      -4.822
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -8.485,
+    -0.732,
+    -1.031
+   ],
+   "bbox_max": [
+    8.483,
+    8.901,
+    0.967
+   ],
+   "sign_units": [
+    "sign.1047"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      8.152,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      -8.335,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -17.846,
+    -0.026,
+    -3.187
+   ],
+   "bbox_max": [
+    17.846,
+    10.674,
+    3.187
+   ],
+   "sign_units": [
+    "sign.1048"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_no",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.246,
+    -0.681,
+    -0.25
+   ],
+   "bbox_max": [
+    0.271,
+    4.18,
+    19.947
+   ],
+   "sign_units": [
+    "sign.1497"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_pl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      7.992,
+      0.0,
+      2.878
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.491,
+    -0.173,
+    -0.439
+   ],
+   "bbox_max": [
+    0.439,
+    3.544,
+    0.439
+   ],
+   "sign_units": [
+    "sign.1084"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_sk",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      8.298,
+      0.0,
+      11.323
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.391,
+    -0.078,
+    -0.391
+   ],
+   "bbox_max": [
+    0.391,
+    2.961,
+    0.604
+   ],
+   "sign_units": [
+    "sign.1085"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_swe",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.18,
+    -0.681,
+    -0.18
+   ],
+   "bbox_max": [
+    0.18,
+    3.708,
+    0.18
+   ],
+   "sign_units": [
+    "sign.1498"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_tr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -8.488,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -3.095,
+    -0.472,
+    -0.242
+   ],
+   "bbox_max": [
+    0.758,
+    8.001,
+    0.497
+   ],
+   "sign_units": [
+    "sign.blke_428",
+    "sign.blke_428a"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_uk",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -8.346,
+      0.0,
+      -3.648
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -4.534,
+    0.0,
+    -0.452
+   ],
+   "bbox_max": [
+    0.104,
+    8.513,
+    0.3
+   ],
+   "sign_units": [
+    "sign.1086"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_hw_uk2",
+   "speedcam": [
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      7.992,
+      0.0,
+      -2.878
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.439,
+    -0.259,
+    -0.457
+   ],
+   "bbox_max": [
+    0.556,
+    3.336,
+    0.457
+   ],
+   "sign_units": [
+    "sign.1130"
+   ]
+  },
+  {
+   "model": "model/speedcamera/speedcamera_r1_tr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      4.5,
+      0.0,
+      -0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -0.0,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -6.485,
+    -3.404,
+    -1.045
+   ],
+   "bbox_max": [
+    10.556,
+    10.877,
+    1.024
+   ],
+   "sign_units": [
+    "sign.blke_427a"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/balt/speedcamera_01_est",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.815,
+      0.0,
+      7.236
+     ],
+     "quat": [
+      0.7071,
+      0.0,
+      -0.7071,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.4,
+    -0.0,
+    -0.4
+   ],
+   "bbox_max": [
+    0.4,
+    1.961,
+    0.4
+   ],
+   "sign_units": [
+    "sign.dlc_balt_875"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/balt/speedcamera_01_fi",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      7.236,
+      0.0,
+      5.815
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.168,
+    0.0,
+    -0.232
+   ],
+   "bbox_max": [
+    0.168,
+    2.744,
+    0.168
+   ],
+   "sign_units": [
+    "sign.dlc_balt_874"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/balt/speedcamera_01_lt",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      7.236,
+      0.0,
+      5.815
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.194,
+    -0.0,
+    -0.26
+   ],
+   "bbox_max": [
+    0.194,
+    3.178,
+    0.187
+   ],
+   "sign_units": [
+    "sign.dlc_balt_876"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/balt/speedcamera_01_lv",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.236,
+      0.0,
+      -5.815
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.328,
+    0.0,
+    -0.308
+   ],
+   "bbox_max": [
+    0.307,
+    4.547,
+    0.378
+   ],
+   "sign_units": [
+    "sign.dlc_balt_877"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/hw2_speedcamera_var1_ru",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -8.557,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -17.303,
+    -2.176,
+    -0.645
+   ],
+   "bbox_max": [
+    0.674,
+    8.546,
+    0.781
+   ],
+   "sign_units": [
+    "sign.rus_14028"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/hw3_2m_offset_speedcamera_var1_ru",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -9.618,
+      0.0,
+      10.0
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -31.618,
+      0.0,
+      -5.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -43.847,
+    -2.176,
+    -0.698
+   ],
+   "bbox_max": [
+    0.799,
+    8.959,
+    0.781
+   ],
+   "sign_units": [
+    "sign.rus_14029"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/hw3_speedcamera_var1_ru",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -10.314,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -21.303,
+    -2.176,
+    -0.645
+   ],
+   "bbox_max": [
+    0.674,
+    8.546,
+    0.781
+   ],
+   "sign_units": [
+    "sign.rus_14030"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/r1_speedcamera_var1_ru",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.385,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.385,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -15.303,
+    -2.176,
+    -0.781
+   ],
+   "bbox_max": [
+    0.674,
+    8.546,
+    0.781
+   ],
+   "sign_units": [
+    "sign.rus_14031"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/r2_nooffset_speedcamera_var1_ru",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -10.803,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -10.803,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -22.62,
+    -2.176,
+    -0.645
+   ],
+   "bbox_max": [
+    0.799,
+    8.959,
+    0.645
+   ],
+   "sign_units": [
+    "sign.rus_14032"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speed_camera_01_be",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.5,
+      0.0,
+      -0.0
+     ],
+     "quat": [
+      -0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.276,
+    -0.126,
+    -0.213
+   ],
+   "bbox_max": [
+    0.415,
+    3.817,
+    0.582
+   ],
+   "sign_units": [
+    "sign.lux_7n000"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speed_camera_01_lu_lux",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -6.0,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -6.0,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.297,
+    -0.082,
+    -0.297
+   ],
+   "bbox_max": [
+    0.297,
+    3.916,
+    0.297
+   ],
+   "sign_units": [
+    "sign.lux_14003"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speed_camera_01_nl",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.0,
+      0.0,
+      -0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -1.629,
+    -0.4,
+    -0.437
+   ],
+   "bbox_max": [
+    1.802,
+    7.258,
+    0.49
+   ],
+   "sign_units": [
+    "sign.lux_2p00u"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speed_camera_01_no_poc",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.318,
+    -0.408,
+    -0.318
+   ],
+   "bbox_max": [
+    0.318,
+    3.7,
+    0.424
+   ],
+   "sign_units": [
+    "sign.poc_5g0ec"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speed_camera_02_be",
+   "speedcam": [
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      -5.5,
+      0.0,
+      0.0
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.25,
+    -0.26,
+    -0.315
+   ],
+   "bbox_max": [
+    0.25,
+    1.902,
+    0.387
+   ],
+   "sign_units": [
+    "sign.lux_7n001"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speed_camera_02_lu_lux",
+   "speedcam": [
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      -6.0,
+      0.0,
+      -0.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.323,
+    -0.0,
+    -0.323
+   ],
+   "bbox_max": [
+    0.323,
+    2.017,
+    0.325
+   ],
+   "sign_units": [
+    "sign.lux_14004"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speed_camera_02_poc",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -5.124,
+      0.0,
+      -0.002
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.18,
+    -0.408,
+    -0.288
+   ],
+   "bbox_max": [
+    0.18,
+    4.0,
+    0.288
+   ],
+   "sign_units": [
+    "sign.poc_5g0eb"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_01_bg_blke",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      8.01,
+      0.027,
+      -0.096
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.4,
+    -0.139,
+    -0.4
+   ],
+   "bbox_max": [
+    0.4,
+    2.906,
+    0.4
+   ],
+   "sign_units": [
+    "sign.dlc_blke_740"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_01_es_ibe",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      0.0,
+      0.0,
+      6.0
+     ],
+     "quat": [
+      0.7071,
+      0.0,
+      -0.7071,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.385,
+    -1.089,
+    -0.418
+   ],
+   "bbox_max": [
+    0.398,
+    1.757,
+    0.43
+   ],
+   "sign_units": [
+    "sign.ibe_2m002"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_01_pt_ibe",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      0.0,
+      0.0,
+      -5.0
+     ],
+     "quat": [
+      0.7071,
+      0.0,
+      -0.7071,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.518,
+    -1.0,
+    -0.521
+   ],
+   "bbox_max": [
+    0.518,
+    2.111,
+    0.521
+   ],
+   "sign_units": [
+    "sign.ibe_2m001"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_02_ro_blke",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      8.01,
+      0.027,
+      -0.096
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.3,
+    -0.139,
+    -0.3
+   ],
+   "bbox_max": [
+    0.3,
+    2.646,
+    0.3
+   ],
+   "sign_units": [
+    "sign.dlc_blke_741"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_3way_hw_01_it",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -2.0,
+      0.0,
+      15.0
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -9.246,
+    -1.734,
+    -2.952
+   ],
+   "bbox_max": [
+    11.224,
+    10.126,
+    2.448
+   ],
+   "sign_units": [
+    "sign.dlc_it_316"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_3way_hw_02_it",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -1.716,
+      0.0,
+      13.736
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -10.375,
+    -1.041,
+    -1.062
+   ],
+   "bbox_max": [
+    10.375,
+    10.143,
+    1.062
+   ],
+   "sign_units": [
+    "sign.dlc_it_319"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_hw_small_01_fr",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -7.236,
+      0.0,
+      -5.815
+     ],
+     "quat": [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.436,
+    -0.614,
+    -0.558
+   ],
+   "bbox_max": [
+    0.454,
+    3.196,
+    0.332
+   ],
+   "sign_units": [
+    "sign.1739"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_small_01_it",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      19.96,
+      0.0,
+      7.0
+     ],
+     "quat": [
+      0.7071,
+      0.0,
+      0.7071,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.417,
+    -0.417,
+    -2.226
+   ],
+   "bbox_max": [
+    0.417,
+    2.158,
+    -1.248
+   ],
+   "sign_units": [
+    "sign.dlc_it_318"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_small_02_orange_it",
+   "speedcam": [
+    {
+     "hookup": "speedcam.r",
+     "pos": [
+      26.14,
+      0.0,
+      4.788
+     ],
+     "quat": [
+      0.7071,
+      0.0,
+      0.7071,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.494,
+    -0.32,
+    -2.111
+   ],
+   "bbox_max": [
+    0.602,
+    1.922,
+    -1.39
+   ],
+   "sign_units": [
+    "sign.dlc_it_320"
+   ]
+  },
+  {
+   "model": "model2/speedcamera/speedcamera_small_03_hw_it",
+   "speedcam": [
+    {
+     "hookup": "speedcam.20",
+     "pos": [
+      -12.292,
+      0.0,
+      14.816
+     ],
+     "quat": [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+     ]
+    }
+   ],
+   "bbox_min": [
+    -0.713,
+    -0.306,
+    -1.021
+   ],
+   "bbox_max": [
+    0.715,
+    3.698,
+    1.019
+   ],
+   "sign_units": [
+    "sign.dlc_it_321"
+   ]
+  }
+ ]
+}
