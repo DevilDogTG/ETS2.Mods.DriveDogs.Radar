@@ -40,6 +40,13 @@ CAB_LOCATORS = [
     ("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "ddradar.cab_aux"),
 ]
 
+# TEST (dev.3): the engine greys out the aux controls unless an aux lamp it recognises is fitted.
+# Base pattern = roof grill (r_grill) accessory with `electric_type: aux_light` + aux flares, so this
+# part copies that pattern in the r_grill slot. Body is the POC GPS box (visible on the roof) until a
+# real near-invisible model exists.
+AUX_PART_DST = "vehicle/truck/upgrade/ddradar/aux_circuit"
+AUX_PART_LOCATORS = [("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "ddradar.cab_aux")]
+
 
 def camera_locators(cam, overrides):
     """Flare locators for one camera model: hand override, else gantry/pole heuristic."""
@@ -63,6 +70,34 @@ def camera_locators(cam, overrides):
         out.append((f"ddr_bl{2 * n}", (x, y, cz - half_depth), FACE_NEG_Z))
         out.append((f"ddr_bl{2 * n + 1}", (x, y, cz + half_depth), FACE_POS_Z))
     return out
+
+
+def write_aux_parts(base, stage):
+    """TEST: one roof-grill (r_grill) aux-circuit part per truck that has the slot."""
+    trucks_dir = os.path.join(base, "def", "vehicle", "truck")
+    trucks = sorted(t for t in os.listdir(trucks_dir)
+                    if os.path.isdir(os.path.join(trucks_dir, t, "accessory", "r_grill")))
+    for truck in trucks:
+        d = os.path.join(stage, "def", "vehicle", "truck", truck, "accessory", "r_grill")
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "ddradar_aux.sii"), "w", newline="\n") as fh:
+            fh.write(f"""SiiNunit
+{{
+accessory_addon_data : ddradar_aux.{truck}.r_grill
+{{
+	name: "DriveDogs aux circuit TEST"
+	price: 10
+	unlock: 0
+	icon: "gps.dlc_toys"
+	part_type: aftermarket
+
+	electric_type: aux_light
+
+	exterior_model: "/{AUX_PART_DST}.pmd"
+}}
+}}
+""")
+    return trucks
 
 
 def write_accessories(base, stage):
@@ -134,6 +169,12 @@ def main():
         fh.write(Pmg.load(os.path.join(args.base, CAB_UNIT_SRC + ".pmg")).with_locators(CAB_LOCATORS))
     trucks = write_accessories(args.base, stage)
 
+    aux_dst = os.path.join(stage, AUX_PART_DST)
+    shutil.copy(os.path.join(args.base, CAB_UNIT_SRC + ".pmd"), aux_dst + ".pmd")
+    with open(aux_dst + ".pmg", "wb") as fh:
+        fh.write(Pmg.load(os.path.join(args.base, CAB_UNIT_SRC + ".pmg")).with_locators(AUX_PART_LOCATORS))
+    aux_trucks = write_aux_parts(args.base, stage)
+
     out_dir = os.path.join(ROOT, "output")
     os.makedirs(out_dir, exist_ok=True)
     package = os.path.join(out_dir, f"drivedog_radar_v{args.version}.scs")
@@ -143,7 +184,8 @@ def main():
                    stdout=subprocess.DEVNULL)
     with open(os.path.join(ROOT, "build", "placements.json"), "w", newline="\n") as fh:
         json.dump(placed, fh, indent=1)
-    print(f"{len(placed)} camera models, cab unit for {len(trucks)} trucks -> {package} "
+    print(f"{len(placed)} camera models, cab unit for {len(trucks)} trucks, aux TEST part for "
+          f"{len(aux_trucks)} trucks -> {package} "
           f"({os.path.getsize(package) // 1024} KB)")
 
 

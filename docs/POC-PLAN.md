@@ -88,12 +88,13 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 | End-to-end SDK harness | ✅ `plugin\build.ps1 -Harness`: fake game drives through a Berlin camera → aux on 350 m before, off 10 m after |
 | In-game test round 1 | Spike 1: tested the wrong model (Berlin = `speed_camera_ch`); Spike 2: unit mounts ✅, aux greyed ❌ |
 | In-game test round 2 (dev.1, log `202610072041`) | strobes flash ✅ but **camera meshes invisible** ❌; aux still greyed ❌; plugin detection ✅ (`camera ahead: speed_camera_ch at 293 m`) but input device rejected ❌ |
+| In-game test round 3 (dev.2, log `202610072108`) | camera meshes back + strobing ✅; plugin input device registered ✅; unit fitted ✅; aux still greyed ❌ |
 | Fixes in v0.1.0-dev.2 | PMG rebuilt in standard layout (offsets shifted, indices end the file) · `electric_type: aux_light` on the unit · input display names without `( )` (harness now enforces SDK name rules) |
 
 ## Test checklist — v0.1.0-dev.1 (one session)
 
 Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
-`drivedog_radar_v0.1.0-dev.2.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+`drivedog_radar_v0.1.0-dev.3.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
 Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
@@ -102,7 +103,10 @@ Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference
 - [ ] Note any camera with a misplaced/absent strobe (country + screenshot) → fix via `placement_overrides.json`.
 - [ ] Still fined when speeding? Models look normal (no missing textures)?
 
-**B. Windshield unit + aux**
+**B. Windshield unit + aux** (dev.3)
+- [ ] Fit "DriveDogs aux circuit TEST" in the **roof grill** slot (replaces the roof grill for the test).
+- [ ] F4 → is **roof** (or front) aux now enabled? Toggle it → does the windshield unit blink?
+- [ ] If not: fit a real roof grill with aux lamps instead → aux enabled? unit blinks?
 - [ ] Fit "DriveDogs Radar detector" (windshield left glass slot).
 - [ ] F4 → Lights: aux now enabled? (front / roof / both)
 - [ ] Bind a key to that aux, toggle → unit blinks red; off → stops.
@@ -127,6 +131,24 @@ Send `game.log.txt` + screenshots.
 | Q4 | ~~Aux toggle cycles?~~ SDK docs: aux states 0 off / 1 dimmed / 2 full → toggle cycles; `AuxController` presses until telemetry matches (on = 1 press, off = 2 presses). Harness models this. | resolved |
 | Q5 | Map DB coverage: DLC sectors overriding base sectors in the merged extraction — any cameras missing? | test C on DLC maps |
 | Q6 | Truck def ids for DLC trucks lacking `accessory/set_lglass` folders (e.g. Scania S 2024e, DAF XF Electric) | map interior ↔ def ids |
+
+### Aux availability (rounds 2-3) and the dev.3 test
+
+The F4 aux (and beacon) controls stay greyed until the engine sees a matching lamp fitted. Not enough:
+a `flare_vehicle light_type: aux` in our windshield unit, nor `electric_type: aux_light` on it (even though
+`set_lglass` also exists on the exterior cab model). In base data only **roof grills (`r_grill`) with
+`electric_type: aux_light`** declare aux lamps; beacon / front-grill lamps have no flag.
+
+dev.3 adds **"DriveDogs aux circuit TEST"** in the `r_grill` slot (same pattern; GPS box body, visible).
+Decision tree after the test:
+
+| Result | Next |
+|---|---|
+| TEST part unlocks **roof aux** and the windshield unit blinks with it | build a near-invisible aux-circuit model → ship it as the plugin companion part (costs the roof-grill slot) |
+| TEST part does nothing, but a **real** aux roof grill unlocks it and the unit blinks | aux needs real lamps: either accept real lamps lighting near cameras, or dig into what the engine keys on (model flares vs slot) |
+| Even real aux lamps don't make the unit blink | `flare_blink light_type: aux` doesn't follow aux in a cab part → rethink the indicator (e.g. exterior part visible through the windshield) |
+
+Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
 
 ### Lessons from round 2
 
