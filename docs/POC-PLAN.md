@@ -97,7 +97,7 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 ## Test checklist — v0.1.0-dev.1 (one session)
 
 Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
-`drivedog_radar_v0.1.0-dev.6.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+`drivedog_radar_v0.1.0-dev.7.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
 Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
@@ -166,6 +166,15 @@ dev.4 test matrix (all on the GPS body, roof aux TEST part fitted):
 | D | `flare_vehicle` (steady), aux | does aux drive a cab flare (without blink) |
 
 Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
+
+### Lesson from round 6 (dev.6, logs `202610082137`, `202610082156`)
+
+- All four windshield variants fitted (A-D) and **none showed anything - not even C (electrics, always on)**.
+  So the problem was not scale, direction, aux or blink: the engine ignored our flare hookups on the truck
+  part entirely. Every light hookup on base truck models is named **`flare.vehicle.*`** (452 of 452);
+  ours were `ddradar.cab_*`. World models (cameras) accept any name, which is why `ddradar.blink` works.
+- dev.7 renames all truck-part flare units to `flare.vehicle.ddr_*` (camera strobe unchanged). Same A-D
+  test; all 69 camera models byte-identical to dev.6.
 
 ### Lesson from round 5
 

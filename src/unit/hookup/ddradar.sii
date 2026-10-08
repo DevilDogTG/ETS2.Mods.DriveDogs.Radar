@@ -27,8 +27,12 @@ flare_blink : ddradar.blink
 	state_change_duration: 0.083
 }
 
+# Truck-part flares MUST be named flare.vehicle.* - the engine ignores other hookup names on vehicle
+# models (dev.6: all four test variants named ddradar.cab_* showed nothing, not even the always-on
+# one; every light hookup on base truck models is flare.vehicle.*). World models (cameras) don't care.
+#
 # Windshield detector indicator: blinks police-style only while the truck's aux light state is on.
-flare_blink : ddradar.cab_blink
+flare_blink : flare.vehicle.ddr_blink
 {
 	dir_type: wide
 	blink_pattern: "X-X-XXX-----------"
@@ -54,7 +58,7 @@ flare_blink : ddradar.cab_blink
 
 # Hidden aux emitter (no flare model, near-zero light). Not enough on its own to enable the aux
 # control (test 2026-10-07); the accessory def also declares `electric_type: aux_light`.
-flare_vehicle : ddradar.cab_aux
+flare_vehicle : flare.vehicle.ddr_aux
 {
 	dir_type: wide
 	light_type: aux
@@ -73,7 +77,7 @@ flare_vehicle : ddradar.cab_aux
 # Visuals copied from base vehicle beacons (amplified flare model, fake_interior_offset), which do show
 # from inside the cab. fake_interior_offset exists only on flare_blink / beacon_vehicle - on
 # flare_vehicle it fails the whole file (round 5), so variant D goes without it.
-flare_blink : ddradar.cab_test_a
+flare_blink : flare.vehicle.ddr_test_a
 {
 	dir_type: wide
 	blink_pattern: "X-X-XXX-----------"
@@ -98,7 +102,7 @@ flare_blink : ddradar.cab_test_a
 	state_change_duration: 0.083
 }
 
-flare_blink : ddradar.cab_test_c
+flare_blink : flare.vehicle.ddr_test_c
 {
 	dir_type: wide
 	blink_pattern: "X-X-XXX-----------"
@@ -123,7 +127,7 @@ flare_blink : ddradar.cab_test_c
 	state_change_duration: 0.083
 }
 
-flare_vehicle : ddradar.cab_test_d
+flare_vehicle : flare.vehicle.ddr_test_d
 {
 	dir_type: wide
 	light_type: aux

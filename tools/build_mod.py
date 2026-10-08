@@ -36,8 +36,8 @@ CAB_UNIT_SRC = "vehicle/truck/upgrade/interior_decors/toyglass/gps.dlc_toys"   #
 CAB_UNIT_DST = "vehicle/truck/upgrade/ddradar/radar_unit"
 CAB_LOCATORS = [
     # model axes: x = width, y = height, z = out of the glass towards the driver (face at z ~ 0.12)
-    ("ddr_cab0", (0.055, 0.035, 0.125), FACE_POS_Z, "ddradar.cab_blink"),
-    ("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "ddradar.cab_aux"),
+    ("ddr_cab0", (0.055, 0.035, 0.125), FACE_POS_Z, "flare.vehicle.ddr_blink"),
+    ("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "flare.vehicle.ddr_aux"),
 ]
 
 # TEST (dev.3): the engine greys out the aux controls unless an aux lamp it recognises is fitted.
@@ -49,12 +49,12 @@ AUX_PART_DST = "vehicle/truck/upgrade/ddradar/aux_circuit"
 # TEST (dev.4): round 4 showed no cab flare at all with roof aux on. Variants (suffix, hookup unit,
 # locator orientation) on the same GPS body narrow down why; see src/unit/hookup/ddradar.sii.
 CAB_TEST_VARIANTS = [
-    ("A", "ddradar.cab_test_a", FACE_POS_Z),   # blink, aux, amplified + fake_interior_offset, faces driver
-    ("B", "ddradar.cab_test_a", FACE_NEG_Z),   # same unit, faces forward like base interior beacons
-    ("C", "ddradar.cab_test_c", FACE_POS_Z),   # blink, electrics (on with ignition): renders at all?
-    ("D", "ddradar.cab_test_d", FACE_POS_Z),   # steady flare_vehicle, aux: does aux drive it?
+    ("A", "flare.vehicle.ddr_test_a", FACE_POS_Z),   # blink, aux, amplified + fake_interior_offset, faces driver
+    ("B", "flare.vehicle.ddr_test_a", FACE_NEG_Z),   # same unit, faces forward like base interior beacons
+    ("C", "flare.vehicle.ddr_test_c", FACE_POS_Z),   # blink, electrics (on with ignition): renders at all?
+    ("D", "flare.vehicle.ddr_test_d", FACE_POS_Z),   # steady flare_vehicle, aux: does aux drive it?
 ]
-AUX_PART_LOCATORS = [("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "ddradar.cab_aux")]
+AUX_PART_LOCATORS = [("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "flare.vehicle.ddr_aux")]
 
 
 def camera_locators(cam, overrides):
