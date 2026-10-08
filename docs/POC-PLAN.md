@@ -97,7 +97,7 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 ## Test checklist — v0.1.0-dev.1 (one session)
 
 Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
-`drivedog_radar_v0.1.0-dev.7.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+`drivedog_radar_v0.1.0-dev.8.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
 Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
@@ -166,6 +166,15 @@ dev.4 test matrix (all on the GPS body, roof aux TEST part fitted):
 | D | `flare_vehicle` (steady), aux | does aux drive a cab flare (without blink) |
 
 Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
+
+### Round 7 (dev.7, log `202610082214`) - flares render!
+
+- With `flare.vehicle.*` names the unit's flare **blinks** - seen in the pause-menu garage (variant B, aux,
+  facing forward) - but not while driving: outside it washes out in daylight (small flare); inside, B faced
+  away and C was displaced by `fake_interior_offset: 1.5` (a roof-beacon setting); D is steady by design.
+- dev.8: TEST A = always on (electrics), faces driver, no offset, bigger (1.0 x 3) -> cab visibility check;
+  TEST B = the unit design: aux blink, one flare towards the driver + one through the glass, no offset,
+  bigger. The main "DriveDogs Radar detector" = B. C/D removed.
 
 ### Lesson from round 6 (dev.6, logs `202610082137`, `202610082156`)
 

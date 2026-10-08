@@ -42,16 +42,16 @@ flare_blink : flare.vehicle.ddr_blink
 
 	type: spot
 	setup: candela_hue_saturation
-	diffuse_color: (20, 0, 100)
-	specular_color: (20, 0, 100)
-	range: 1.5
+	diffuse_color: (60, 0, 100)
+	specular_color: (60, 0, 100)
+	range: 2.0
 	forward_distance: false
 	inner_angle: 30
 	outer_angle: 120
 
-	model: "/model/flare/uniform_red.pmd"
-	default_scale: 0.15
-	scale_factor: 1
+	model: "/model/flare/uniform_red_amplified.pmd"
+	default_scale: 1.0
+	scale_factor: 3
 
 	state_change_duration: 0.083
 }
@@ -73,36 +73,9 @@ flare_vehicle : flare.vehicle.ddr_aux
 	outer_angle: 10
 }
 
-# ---- TEST (dev.4) cab flare variants: round 4 showed nothing in the cab with roof aux on.
-# Visuals copied from base vehicle beacons (amplified flare model, fake_interior_offset), which do show
-# from inside the cab. fake_interior_offset exists only on flare_blink / beacon_vehicle - on
-# flare_vehicle it fails the whole file (round 5), so variant D goes without it.
-flare_blink : flare.vehicle.ddr_test_a
-{
-	dir_type: wide
-	blink_pattern: "X-X-XXX-----------"
-	blink_step_length: 0.06
-
-	light_type: aux
-
-	type: spot
-	setup: candela_hue_saturation
-	diffuse_color: (60, 0, 100)
-	specular_color: (60, 0, 100)
-	range: 2.0
-	forward_distance: false
-	inner_angle: 30
-	outer_angle: 120
-
-	model: "/model/flare/uniform_red_amplified.pmd"
-	default_scale: 0.632
-	scale_factor: 3
-	fake_interior_offset: 1.5
-
-	state_change_duration: 0.083
-}
-
-flare_blink : flare.vehicle.ddr_test_c
+# ---- TEST (dev.8): same visuals as ddr_blink but always on with the engine (electrics), so the driver
+# can check cab visibility without aux. No fake_interior_offset (moved the dev.7 flare out of the cab).
+flare_blink : flare.vehicle.ddr_test_e
 {
 	dir_type: wide
 	blink_pattern: "X-X-XXX-----------"
@@ -120,29 +93,9 @@ flare_blink : flare.vehicle.ddr_test_c
 	outer_angle: 120
 
 	model: "/model/flare/uniform_red_amplified.pmd"
-	default_scale: 0.632
+	default_scale: 1.0
 	scale_factor: 3
-	fake_interior_offset: 1.5
 
 	state_change_duration: 0.083
-}
-
-flare_vehicle : flare.vehicle.ddr_test_d
-{
-	dir_type: wide
-	light_type: aux
-
-	type: spot
-	setup: candela_hue_saturation
-	diffuse_color: (60, 0, 100)
-	specular_color: (60, 0, 100)
-	range: 2.0
-	forward_distance: false
-	inner_angle: 30
-	outer_angle: 120
-
-	model: "/model/flare/uniform_red_amplified.pmd"
-	default_scale: 0.632
-	scale_factor: 3
 }
 }

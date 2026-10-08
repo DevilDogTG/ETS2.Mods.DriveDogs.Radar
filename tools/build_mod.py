@@ -34,10 +34,16 @@ GANTRY_HEIGHT_RATIO = 0.7
 
 CAB_UNIT_SRC = "vehicle/truck/upgrade/interior_decors/toyglass/gps.dlc_toys"   # POC body (Toys DLC)
 CAB_UNIT_DST = "vehicle/truck/upgrade/ddradar/radar_unit"
+# model axes: x = width, y = height, z = out of the glass towards the driver (screen face at z ~ 0.12,
+# glass side at z ~ 0). The hidden aux emitter is on every unit.
+CAB_FACE_DRIVER = (0.055, 0.035, 0.125)
+CAB_FACE_GLASS = (0.055, 0.035, -0.005)
+CAB_AUX_EMITTER = ("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "flare.vehicle.ddr_aux")
+# unit design (dev.8): aux-driven blink, one flare towards the driver (cab view) + one through the glass
 CAB_LOCATORS = [
-    # model axes: x = width, y = height, z = out of the glass towards the driver (face at z ~ 0.12)
-    ("ddr_cab0", (0.055, 0.035, 0.125), FACE_POS_Z, "flare.vehicle.ddr_blink"),
-    ("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "flare.vehicle.ddr_aux"),
+    ("ddr_cab0", CAB_FACE_DRIVER, FACE_POS_Z, "flare.vehicle.ddr_blink"),
+    ("ddr_cab1", CAB_FACE_GLASS, FACE_NEG_Z, "flare.vehicle.ddr_blink"),
+    CAB_AUX_EMITTER,
 ]
 
 # TEST (dev.3): the engine greys out the aux controls unless an aux lamp it recognises is fitted.
@@ -46,15 +52,16 @@ CAB_LOCATORS = [
 # real near-invisible model exists.
 AUX_PART_DST = "vehicle/truck/upgrade/ddradar/aux_circuit"
 
-# TEST (dev.4): round 4 showed no cab flare at all with roof aux on. Variants (suffix, hookup unit,
-# locator orientation) on the same GPS body narrow down why; see src/unit/hookup/ddradar.sii.
+# TEST (dev.8). dev.7 showed the renamed flare.vehicle.* flares blinking in the pause-menu garage, not
+# while driving: from outside the small flare washes out in daylight, inside it faced away (B) or was
+# moved away by fake_interior_offset (C). Variants: (suffix, locators)
 CAB_TEST_VARIANTS = [
-    ("A", "flare.vehicle.ddr_test_a", FACE_POS_Z),   # blink, aux, amplified + fake_interior_offset, faces driver
-    ("B", "flare.vehicle.ddr_test_a", FACE_NEG_Z),   # same unit, faces forward like base interior beacons
-    ("C", "flare.vehicle.ddr_test_c", FACE_POS_Z),   # blink, electrics (on with ignition): renders at all?
-    ("D", "flare.vehicle.ddr_test_d", FACE_POS_Z),   # steady flare_vehicle, aux: does aux drive it?
+    # always on with the engine, faces the driver, no interior offset: can the driver see a cab flare?
+    ("A", [("ddr_cab0", CAB_FACE_DRIVER, FACE_POS_Z, "flare.vehicle.ddr_test_e"), CAB_AUX_EMITTER]),
+    # the unit design itself (aux blink, driver + glass flares)
+    ("B", CAB_LOCATORS),
 ]
-AUX_PART_LOCATORS = [("ddr_aux0", (0.0, 0.0, 0.02), FACE_POS_Z, "flare.vehicle.ddr_aux")]
+AUX_PART_LOCATORS = [CAB_AUX_EMITTER]
 
 
 def camera_locators(cam, overrides):
@@ -189,11 +196,11 @@ def main():
         fh.write(base_pmg(CAB_UNIT_SRC).with_locators(CAB_LOCATORS))
     gps_pmg = base_pmg(CAB_UNIT_SRC)
     variants = [("", CAB_UNIT_DST)]
-    for suffix, hookup, quat in CAB_TEST_VARIANTS:
+    for suffix, locators in CAB_TEST_VARIANTS:
         model = f"{CAB_UNIT_DST}_test_{suffix.lower()}"
         shutil.copy(os.path.join(args.base, CAB_UNIT_SRC + ".pmd"), os.path.join(stage, model + ".pmd"))
         with open(os.path.join(stage, model + ".pmg"), "wb") as fh:
-            fh.write(gps_pmg.with_locators([("ddr_cab0", CAB_LOCATORS[0][1], quat, hookup), CAB_LOCATORS[1]]))
+            fh.write(gps_pmg.with_locators(locators))
         variants.append((suffix, model))
     trucks = write_accessories(args.base, stage, variants)
 
