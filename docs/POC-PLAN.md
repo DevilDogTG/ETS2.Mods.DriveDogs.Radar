@@ -97,7 +97,7 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 ## Test checklist — v0.1.0-dev.1 (one session)
 
 Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
-`drivedog_radar_v0.1.0-dev.9.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+`drivedog_radar_v0.1.0-dev.10.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
 Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
@@ -166,6 +166,18 @@ dev.4 test matrix (all on the GPS body, roof aux TEST part fitted):
 | D | `flare_vehicle` (steady), aux | does aux drive a cab flare (without blink) |
 
 Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
+
+### Round 9 (dev.9, log `202610082251`) + dev.10 - lamp material instead of flares
+
+- Visor TEST A (always on): LEDs **visible from outside (cam 2) only**, not from the cab.
+- Owner tip: the Scania centre-windshield lightboard (`frntglss_mid`) glows inside **and** outside (follows
+  parking lights). Base lightboards have **no flares** - one `eut2.light.tex` material. Materials render in
+  the cab; flares in cab models do not (in gameplay).
+- SCS Blender Tools lamp mask: vehicle lamps = UV tile x by side, RGBA by lamp type; **aux parts**
+  (`electric_type: aux_light`): UV tile x 0 = white / 1 = orange, **R = dim, G = bright**.
+- dev.10 TEST: "DriveDogs Radar LED board TEST" (Scania S `frntglss_mid`) = Griffin lightboard copy whose
+  light material path is patched (same length) to our `eut2.lamp.add.env` material (base = mask = the
+  board's LED texture), `electric_type: aux_light`. Expect: glows with roof aux, inside and out.
 
 ### dev.9 - radar sun visor POC (owner chose option 1, 2026-10-08; Scania S first)
 

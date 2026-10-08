@@ -73,6 +73,44 @@ VISOR_POC = {
     # truck: (base accessory def, LED x positions, LED y, LED z)  - model axes: z- = forward
     "scania.s_2016": ("def/vehicle/truck/scania.s_2016/accessory/sunshld/stock.sii", (-0.45, 0.45), -0.09, -0.02),
 }
+# TEST (dev.10): materials render in the cab (owner's Scania centre-windshield lightboard glows inside
+# and out; it is lit by one `eut2.light.tex` material following parking lights). The lamp shader
+# follows aux on parts with `electric_type: aux_light` (SCS Blender Tools: aux mask R = dim, G = bright,
+# UV tile x 0 = white). So: copy the Griffin lightboard into frntglss_mid and point its light piece at our
+# eut2.lamp material, using the board's own LED texture as base and mask.
+LED_POC = {
+    # truck: (base lightboard model, light material to replace)
+    "scania.s_2016": ("vehicle/truck/upgrade/frntglass_mid/scania_rcab_2009/lightboard01",
+                      "/automat/ba/ba6d368f32889c80.mat"),
+}
+LED_MAT = "/automat/dd/ddradar000led001.mat"   # same length as the replaced path (patched in place)
+LED_MAT_TEXT = """effect : "eut2.lamp.add.env.rfx" {
+	additional_ambient : 0.000000
+	diffuse : { 1.000000 , 1.000000 , 1.000000 }
+	env_factor : { 0.380056 , 0.380056 , 0.380056 }
+	fresnel : { 0.200000 , 0.900000 }
+	shininess : 90.000000
+	specular : { 0.447988 , 0.447988 , 0.447988 }
+	texture : "texture_base" {
+		source : "/vehicle/truck/upgrade/frntglass_mid/scania_rcab_2009/griff01l.tobj"
+		u_address : clamp
+		v_address : clamp
+	}
+	texture : "texture_mask" {
+		source : "/vehicle/truck/upgrade/frntglass_mid/scania_rcab_2009/griff01l.tobj"
+		u_address : clamp
+		v_address : clamp
+	}
+	texture : "texture_reflection" {
+		source : "/material/environment/vehicle_reflection.tobj"
+		u_address : clamp
+		v_address : clamp
+		w_address : clamp
+		aniso : disabled
+	}
+}
+"""
+
 VISOR_VARIANTS = [
     # (suffix, name label, hookup)
     ("", "", "flare.vehicle.ddr_blink"),                 # aux blink - the design
@@ -144,6 +182,47 @@ accessory_addon_data : {unit}.{truck}.sunshld
 }}
 """)
             built.append(f"{truck}{label}")
+    return built
+
+
+def build_led_tests(base, stage, base_pmg):
+    """TEST (see LED_POC): aux-driven lamp-material lightboard in the centre windshield slot."""
+    built = []
+    os.makedirs(os.path.dirname(os.path.join(stage, LED_MAT.lstrip("/"))), exist_ok=True)
+    with open(os.path.join(stage, LED_MAT.lstrip("/")), "w", newline="\n") as fh:
+        fh.write(LED_MAT_TEXT)
+    for truck, (model, old_mat) in LED_POC.items():
+        if len(old_mat) != len(LED_MAT):
+            raise ValueError("material path lengths differ - cannot patch the pmd in place")
+        with open(os.path.join(base, model + ".pmd"), "rb") as fh:
+            pmd = fh.read()
+        if pmd.count(old_mat.encode()) != 1:
+            raise ValueError(f"{old_mat} not found exactly once in {model}.pmd")
+        dst = f"vehicle/truck/upgrade/ddradar/led_{truck.replace('.', '_')}"
+        with open(os.path.join(stage, dst + ".pmd"), "wb") as fh:
+            fh.write(pmd.replace(old_mat.encode(), LED_MAT.encode()))
+        with open(os.path.join(stage, dst + ".pmg"), "wb") as fh:
+            fh.write(base_pmg(model).data)
+        d = os.path.join(stage, "def", "vehicle", "truck", truck, "accessory", "frntglss_mid")
+        os.makedirs(d, exist_ok=True)
+        with open(os.path.join(d, "ddrled.sii"), "w", newline="\n") as fh:
+            fh.write(f"""SiiNunit
+{{
+accessory_addon_data : ddrled.{truck}.frntglss_mid
+{{
+	name: "DriveDogs Radar LED board TEST"
+	price: 480
+	unlock: 0
+	icon: "frntglass_mid/scania_rcab_2009/lightboard01"
+	part_type: aftermarket
+	electric_type: aux_light
+
+	exterior_model: "/{dst}.pmd"
+	interior_model: "/{dst}.pmd"
+}}
+}}
+""")
+        built.append(truck)
     return built
 
 
@@ -269,6 +348,7 @@ def main():
         fh.write(base_pmg(CAB_UNIT_SRC).with_locators(AUX_PART_LOCATORS))
     aux_trucks = write_aux_parts(args.base, stage)
     visors = build_visors(args.base, stage, base_pmg)
+    leds = build_led_tests(args.base, stage, base_pmg)
 
     # one unknown attribute makes the game drop a whole .sii file (round 5) - never pack that
     lint = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "lint_units.py"), "--base", args.base])
@@ -285,7 +365,7 @@ def main():
     with open(os.path.join(ROOT, "build", "placements.json"), "w", newline="\n") as fh:
         json.dump(placed, fh, indent=1)
     print(f"{len(placed)} camera models, cab unit for {len(trucks)} trucks, aux TEST part for "
-          f"{len(aux_trucks)} trucks, radar sun visor POC: {', '.join(visors)} -> {package} "
+          f"{len(aux_trucks)} trucks, radar sun visor POC: {', '.join(visors)}, LED board TEST: {', '.join(leds)} -> {package} "
           f"({os.path.getsize(package) // 1024} KB)")
 
 
