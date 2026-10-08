@@ -194,7 +194,7 @@ Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner
 
 - Python 3 + Pillow; `scs_packer` on `PATH` (already: `D:\Programs\ScsSoftwares\bin`).
 - Extracted reference: `<root>/base/<version>` (default 1.61.1.1, `GAME_VERSION` in `tools/scs_common.py`);
-  `<root>` comes from this host's `Extracted Reference Root` (ets2-mod-developer profile) - never
+  `<root>` comes from this host's `games.ets2.reference_root` (scs-mod-developer profile) - never
   hard-coded. The reference keeps text files on disk; `.pmg` assets are fetched on demand through the
   profile's `megapack` helpers (`ref_path` / `ref_fetch`). `scan_cameras.py` scans only the models of
   `sign_model` units (~8.5k, ~200 MB) - the map can only place cameras through those.
