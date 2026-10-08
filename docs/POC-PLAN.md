@@ -167,6 +167,18 @@ dev.4 test matrix (all on the GPS body, roof aux TEST part fitted):
 
 Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
 
+### Round 10 (dev.10, local game log 2026-10-09) - lamp material fails; HUD/UI checked
+
+- LED board: `[dx11] Failed to create vertex input layout ... elements=3/4` - the lamp shader needs a 4th
+  vertex stream (mask UV) the lightboard mesh lacks → needs a self-authored mesh (Blender).
+- HUD (`ui/adviser_tachometer.sii`) icons bind fixed engine IDs: cruise, fuel, blinkers, low/high beam,
+  lane assist, engine/parking/trailer brake, retarders, engine, transmission, hazard (1080), beacon (1090),
+  diff lock, air pressure, wipers - **no aux**. Dashboard UI IDs: no free on/off state either.
+- Options put to the owner: (1) **plugin overlay** - click-through top-most window with a blinking radar icon
+  driven by the plugin's detection (needs borderless fullscreen; drops aux, roof-grill part and cab unit);
+  (2) restyle the HUD beacon icon (needs a beacon, conflicts with special transport); (3) own LED mesh with
+  lamp material; (4) strobes only. Recommended: (1). Owner's game: exclusive fullscreen, 2560x1080.
+
 ### Round 9 (dev.9, log `202610082251`) + dev.10 - lamp material instead of flares
 
 - Visor TEST A (always on): LEDs **visible from outside (cam 2) only**, not from the cab.
