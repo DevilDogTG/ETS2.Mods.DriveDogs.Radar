@@ -11,6 +11,32 @@ PMG 0x15 layout used here (little endian):
                   bbox min[3], max[3], i32 stride, i32 stream offsets[8] (-1 = unused), i32 index offset
 """
 import struct
+import sys
+from pathlib import Path
+
+GAME_VERSION = "1.61.1.1"   # extracted reference used by the tools (override with --base)
+_MEGAPACK = Path.home() / ".agent-brains/profiles/ets2-mod-developer/skills/megapack/scripts"
+
+
+def megapack():
+    """The ets2-mod-developer profile's reference helpers (ref_path, ref_fetch, host_section, ...).
+
+    The extracted base keeps only text files on disk; assets (.pmg, .dds, ...) are fetched from the
+    game archives on demand through these helpers.
+    """
+    if str(_MEGAPACK) not in sys.path:
+        sys.path.insert(0, str(_MEGAPACK))
+    try:
+        import megapack as mp
+    except ImportError as exc:
+        raise SystemExit(f"megapack helpers not found in {_MEGAPACK}: {exc}")
+    return mp
+
+
+def default_base():
+    """<this host's extracted reference root>/base/<GAME_VERSION> (root from the host file)."""
+    root = megapack().host_section("Extracted Reference Root")["root"]
+    return str(Path(root) / "base" / GAME_VERSION)
 
 ALPHABET = "\0" + "0123456789abcdefghijklmnopqrstuvwxyz_"
 

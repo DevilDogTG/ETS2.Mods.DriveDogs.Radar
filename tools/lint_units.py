@@ -14,8 +14,10 @@ import os
 import re
 import sys
 
+sys.path.insert(0, os.path.dirname(__file__))
+from scs_common import default_base  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_BASE = "D:/Repositories/ETS2/Extracted/base/1.61.1.1"
 UNIT = re.compile(r"^\s*(\w+)\s*:\s*([\w.]+)\s*\{(.*?)^\s*\}", re.M | re.S)
 ATTR = re.compile(r"^\s*(\w+)\s*(?:\[\d*\])?\s*:", re.M)
 SCAN_DIRS = ("unit", "def/vehicle")
@@ -45,9 +47,10 @@ def base_attributes(base):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--base", default=DEFAULT_BASE)
+    ap.add_argument("--base", default=None, help="default: <host reference root>/base/<GAME_VERSION>")
     ap.add_argument("files", nargs="*", help="defaults to every .sii under src/ and build/stage/def")
     args = ap.parse_args()
+    args.base = args.base or default_base()
 
     files = args.files or [os.path.join(d, f)
                            for top in (os.path.join(ROOT, "src"), os.path.join(ROOT, "build", "stage", "def"))

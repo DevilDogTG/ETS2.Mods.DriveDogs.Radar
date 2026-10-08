@@ -12,7 +12,7 @@ package stays tiny and inherits base-game fixes to anything except locators.
 
 POC parts that are NOT for release: the cab unit body is a copy of the Toys DLC GPS model.
 
-usage: python tools/build_mod.py [--base ...] [--version 0.1.0-dev.1]
+usage: python tools/build_mod.py [--base <reference root>/base/<version>] [--version 0.1.0-dev.1]
 """
 import argparse
 import json
@@ -20,12 +20,12 @@ import os
 import shutil
 import subprocess
 import sys
+from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
-from scs_common import Pmg  # noqa: E402
+from scs_common import Pmg, default_base, megapack  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_BASE = "D:/Repositories/ETS2/Extracted/base/1.61.1.1"
 CAMERA_HOOKUP = "ddradar.blink"
 FACE_NEG_Z = (1.0, 0.0, 0.0, 0.0)   # quaternion (w, x, y, z): identity, flare faces -Z
 FACE_POS_Z = (0.0, 0.0, 1.0, 0.0)   # 180 deg about Y
@@ -145,10 +145,16 @@ accessory_addon_data : {unit}.{truck}.set_lglass
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--base", default=DEFAULT_BASE)
+    ap.add_argument("--base", default=None, help="default: <host reference root>/base/<GAME_VERSION>")
     ap.add_argument("--version", default="0.1.0-dev.1")
     ap.add_argument("--packer", default="scs_packer")
     args = ap.parse_args()
+    args.base = args.base or default_base()
+    mp = megapack()
+
+    def base_pmg(model):
+        """A base .pmg - assets are fetched from the game archives on demand (text-only reference)."""
+        return Pmg.load(mp.ref_path(Path(args.base), model + ".pmg"))
 
     with open(os.path.join(ROOT, "data", "cameras.json")) as fh:
         cameras = json.load(fh)["cameras"]
@@ -168,12 +174,11 @@ def main():
 
     placed = []
     for cam in cameras:
-        src = os.path.join(args.base, cam["model"] + ".pmg")
         dst = os.path.join(stage, cam["model"] + ".pmg")
         os.makedirs(os.path.dirname(dst), exist_ok=True)
         locs = camera_locators(cam, overrides)
         with open(dst, "wb") as fh:
-            fh.write(Pmg.load(src).with_locators([(n, p, q, CAMERA_HOOKUP) for n, p, q in locs]))
+            fh.write(base_pmg(cam["model"]).with_locators([(n, p, q, CAMERA_HOOKUP) for n, p, q in locs]))
         placed.append({"model": cam["model"], "locators": [[n, [round(v, 3) for v in p]] for n, p, _ in locs],
                        "source": "override" if cam["model"] in overrides else "heuristic"})
 
@@ -181,8 +186,8 @@ def main():
     os.makedirs(os.path.dirname(cab_dst), exist_ok=True)
     shutil.copy(os.path.join(args.base, CAB_UNIT_SRC + ".pmd"), cab_dst + ".pmd")
     with open(cab_dst + ".pmg", "wb") as fh:
-        fh.write(Pmg.load(os.path.join(args.base, CAB_UNIT_SRC + ".pmg")).with_locators(CAB_LOCATORS))
-    gps_pmg = Pmg.load(os.path.join(args.base, CAB_UNIT_SRC + ".pmg"))
+        fh.write(base_pmg(CAB_UNIT_SRC).with_locators(CAB_LOCATORS))
+    gps_pmg = base_pmg(CAB_UNIT_SRC)
     variants = [("", CAB_UNIT_DST)]
     for suffix, hookup, quat in CAB_TEST_VARIANTS:
         model = f"{CAB_UNIT_DST}_test_{suffix.lower()}"
@@ -195,7 +200,7 @@ def main():
     aux_dst = os.path.join(stage, AUX_PART_DST)
     shutil.copy(os.path.join(args.base, CAB_UNIT_SRC + ".pmd"), aux_dst + ".pmd")
     with open(aux_dst + ".pmg", "wb") as fh:
-        fh.write(Pmg.load(os.path.join(args.base, CAB_UNIT_SRC + ".pmg")).with_locators(AUX_PART_LOCATORS))
+        fh.write(base_pmg(CAB_UNIT_SRC).with_locators(AUX_PART_LOCATORS))
     aux_trucks = write_aux_parts(args.base, stage)
 
     # one unknown attribute makes the game drop a whole .sii file (round 5) - never pack that

@@ -20,10 +20,9 @@ import struct
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from scs_common import token  # noqa: E402
+from scs_common import default_base, token  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_BASE = "D:/Repositories/ETS2/Extracted/base/1.61.1.1"
 SIGN_ITEM = 36
 # offsets relative to the model token
 TYPE_AT, UID_AT, KDOP_AT = -57, -53, -45
@@ -31,10 +30,11 @@ TYPE_AT, UID_AT, KDOP_AT = -57, -53, -45
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--base", default=DEFAULT_BASE)
+    ap.add_argument("--base", default=None, help="default: <host reference root>/base/<GAME_VERSION>")
     ap.add_argument("--cameras", default=os.path.join(ROOT, "data", "cameras.json"))
     ap.add_argument("--out", default=os.path.join(ROOT, "data", "camera_db.csv"))
     args = ap.parse_args()
+    args.base = args.base or default_base()
 
     with open(args.cameras) as fh:
         cameras = json.load(fh)["cameras"]
