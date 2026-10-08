@@ -82,7 +82,7 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 |---|---|
 | Camera scan (69 models) + DB (707) | ✅ done, `data/` |
 | Merged mod package | ✅ `output/drivedog_radar_v0.1.0-dev.1.scs`, all 70 patched PMGs verified (geometry identical, original locators kept) |
-| Cover image | ✅ `src/cover.jpg` (`tools/generate_cover.py`, World style) |
+| Cover image | ✅ `src/cover.jpg` (`tools/generate_cover.py`, shared DriveDogs layout: title centred, version pill top-right - dev.6) |
 | Plugin core + unit tests | ✅ `plugin\build.ps1 -Test` passes (707 cameras, 30 Berlin) |
 | Plugin DLL (SDK 1.15) | ✅ `output/plugin/ddradar.dll`, zip `output/drivedog_radar_plugin_v<ver>.zip` |
 | End-to-end SDK harness | ✅ `plugin\build.ps1 -Harness`: fake game drives through a Berlin camera → aux on 350 m before, off 10 m after |
@@ -91,12 +91,13 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 | In-game test round 3 (dev.2, log `202610072108`) | camera meshes back + strobing ✅; plugin input device registered ✅; unit fitted ✅; aux still greyed ❌ |
 | In-game test round 4 (dev.3, log `202610072131`) | **roof aux enabled** by the r_grill TEST part ✅ (switched on); windshield unit shows **no flare at all** ❌ |
 | In-game test round 5 (dev.4, log `202610072150`) | **whole hookup file rejected** (`flare_vehicle` has no `fake_interior_offset`) → no strobes, aux greyed ❌ — fixed in dev.5 + build-time lint |
+| v0.1.0-dev.6 | cover only (shared DriveDogs layout); mod content identical to dev.5 (not yet playtested), so the dev.5 checklist applies unchanged |
 | Fixes in v0.1.0-dev.2 | PMG rebuilt in standard layout (offsets shifted, indices end the file) · `electric_type: aux_light` on the unit · input display names without `( )` (harness now enforces SDK name rules) |
 
 ## Test checklist — v0.1.0-dev.1 (one session)
 
 Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
-`drivedog_radar_v0.1.0-dev.5.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+`drivedog_radar_v0.1.0-dev.6.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
 Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
@@ -105,7 +106,7 @@ Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference
 - [ ] Note any camera with a misplaced/absent strobe (country + screenshot) → fix via `placement_overrides.json`.
 - [ ] Still fined when speeding? Models look normal (no missing textures)?
 
-**B. Windshield unit + aux** (dev.5)
+**B. Windshield unit + aux** (dev.5 / dev.6)
 - [x] r_grill "DriveDogs aux circuit TEST" enables **roof aux** (round 4).
 - [ ] Keep it fitted. In the windshield slot try "DriveDogs Radar detector TEST A", B, C, D in turn
       (engine off → on for C). For each: roof aux off / on → flare visible? blinking? (day + night shot)

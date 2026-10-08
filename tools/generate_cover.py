@@ -3,9 +3,10 @@
 Generates the Mod Manager cover/thumbnail (src/cover.jpg, referenced by manifest.sii `icon:`). SCS requires a
 276x162 JPEG.
 
-Same layout and gold/amber palette as the other DriveDogs covers (logo left, title block right, road, amber
-version badge); the Radar motif is a night road with a pole-mounted speed camera on the verge firing the
-mod's red police-style strobe, its red glow reflected on the asphalt.
+Same layout and gold/amber palette as the other DriveDogs covers (logo top-left, title block right centred
+on the cover, road, amber version badge top-right); the Radar motif is a night road with a pole-mounted speed
+camera in the bottom-right corner beside the road, firing the mod's red police-style strobe, its red glow
+reflected on the verge.
 
 Composited at 4x (1104x648) then downscaled for anti-aliasing. The badge is read from VERSION, so rerun this
 before every build that bumps the version.
@@ -124,11 +125,12 @@ def add_road(img):
 
 
 def add_camera(img):
-    """Pole speed camera on the right verge (between road and title block), box facing the driver, firing the
-    red strobe: hard core + wide bloom + a red smear on the road below."""
+    """Pole speed camera on the right verge in the bottom-right corner, below the title block (where Economy keeps
+    its coins and Physics its springs), box facing the driver, firing the red strobe: hard core + wide bloom + a
+    red smear on the verge below."""
     w, h = img.size
-    x, base_y = w * 0.70, h * 0.86
-    top_y = h * 0.46
+    x, base_y = w * 0.88, h * 0.98
+    top_y = h * 0.76
     pole_w, box_w, box_h = w * 0.006, w * 0.045, h * 0.12
 
     body = Image.new("RGBA", img.size, (0, 0, 0, 0))
@@ -155,7 +157,7 @@ def add_camera(img):
     rd.line([(sx, sy - h * 0.10), (sx, sy + h * 0.10)], fill=(*STROBE_COLOR, 160), width=int(h * 0.005))
 
     smear = Image.new("RGBA", img.size, (0, 0, 0, 0))
-    ImageDraw.Draw(smear).ellipse([w * 0.52, h * 0.84, w * 0.74, h * 0.98], fill=(*STROBE_COLOR, 90))
+    ImageDraw.Draw(smear).ellipse([w * 0.76, h * 0.90, w * 1.00, h * 1.04], fill=(*STROBE_COLOR, 90))
     return composite(img, smear.filter(ImageFilter.GaussianBlur(radius=h * 0.04)), body, bloom, bloom,
                      rays.filter(ImageFilter.GaussianBlur(radius=h * 0.006)),
                      halo.filter(ImageFilter.GaussianBlur(radius=h * 0.015)), core)
@@ -213,7 +215,7 @@ def add_text(img):
 
     line_bbox = draw.textbbox((0, 0), "Ag", font=title_font)
     line_h = (line_bbox[3] - line_bbox[1]) * 1.15
-    y = h * 0.30 - (line_h * len(title_lines) + line_h * 0.9) / 2
+    y = h * 0.50 - (line_h * len(title_lines) + line_h * 0.9) / 2
     for line in title_lines:
         draw_with_outline(draw, (x_start, y), line, title_font, TITLE_COLOR, width=3)
         y += line_h
@@ -223,15 +225,16 @@ def add_text(img):
 
 
 def add_version_badge(img, version):
+    """Amber pill in the empty top-right corner, as on the other DriveDogs covers."""
     draw = ImageDraw.Draw(img, "RGBA")
     w, h = img.size
     text = f"v{version}"
     font = ImageFont.truetype(FONT_BOLD, int(h * 0.06))
     bbox = draw.textbbox((0, 0), text, font=font)
     pad_x, pad_y = h * 0.02, h * 0.015
-    x1, y1 = w - h * 0.03, h - h * 0.03
+    x1, y0 = w - h * 0.03, h * 0.03
     x0 = x1 - (bbox[2] - bbox[0]) - 2 * pad_x
-    y0 = y1 - (bbox[3] - bbox[1]) - 2 * pad_y
+    y1 = y0 + (bbox[3] - bbox[1]) + 2 * pad_y
     draw.rounded_rectangle([x0, y0, x1, y1], radius=(y1 - y0) / 2, fill=(*BADGE_COLOR, 235))
     draw.text((x0 + pad_x - bbox[0], y0 + pad_y - bbox[1]), text, font=font, fill=BADGE_TEXT_COLOR)
     return img
