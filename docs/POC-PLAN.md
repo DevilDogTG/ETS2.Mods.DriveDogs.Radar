@@ -167,6 +167,19 @@ dev.4 test matrix (all on the GPS body, roof aux TEST part fitted):
 
 Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
 
+### Round 8 (dev.8, log `202610082229`) - interior-slot flares are not drawn in gameplay
+
+- TEST A (always on, faces driver, no offset, bigger) and TEST B (aux, driver + glass flares) both fitted:
+  **dark in gameplay** (cab and exterior), blinking only in the pause-menu showroom.
+- Conclusion: the engine does not draw flare sprites of parts in interior slots (`set_lglass`) during
+  gameplay. Base agrees: interior-slot parts only use light-only flares (`intlight_bck/bgr`) or luminous
+  materials (steering wheels: `dif.lum…` + `electric_type: vehicle_interior`).
+- Options (owner to choose): (1) **sun-visor indicator** - `sunshld` is an exterior slot whose interior
+  model may carry aux flares visible from the cab (base: Renault Premium `sunshield_10_bc_int` has
+  `flare.vehicle.aux_light`), and it is an aux-lamp slot; costs the sun-visor slot. (2) emissive lamp
+  material (mask texture driven by aux) on the windshield unit - more work, unproven in interior slots.
+  (3) no in-cab indicator.
+
 ### Round 7 (dev.7, log `202610082214`) - flares render!
 
 - With `flare.vehicle.*` names the unit's flare **blinks** - seen in the pause-menu garage (variant B, aux,
