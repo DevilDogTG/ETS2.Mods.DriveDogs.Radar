@@ -17,6 +17,7 @@ usage: python tools/build_mod.py [--base <reference root>/base/<version>] [--ver
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -63,6 +64,21 @@ CAB_TEST_VARIANTS = [
 ]
 AUX_PART_LOCATORS = [CAB_AUX_EMITTER]
 
+# POC (dev.9): the windshield slot is an interior slot and the engine does not draw its flares in
+# gameplay (round 8). The sun visor (sunshld) is an exterior slot with an interior model; base precedent:
+# Renault Premium sunshield_10_bc_int carries flare.vehicle.aux_light visible from the cab. So the radar
+# indicator becomes a sun visor: a copy of the truck's stock visor with LED flares on the front lower
+# edge - towards the driver in the interior model, forward in the exterior model. Scania S only for now.
+VISOR_POC = {
+    # truck: (base accessory def, LED x positions, LED y, LED z)  - model axes: z- = forward
+    "scania.s_2016": ("def/vehicle/truck/scania.s_2016/accessory/sunshld/stock.sii", (-0.45, 0.45), -0.09, -0.02),
+}
+VISOR_VARIANTS = [
+    # (suffix, name label, hookup)
+    ("", "", "flare.vehicle.ddr_blink"),                 # aux blink - the design
+    ("_t", " TEST A", "flare.vehicle.ddr_test_e"),       # always on with the engine - visibility check
+]
+
 
 def camera_locators(cam, overrides):
     """Flare locators for one camera model: hand override, else gantry/pole heuristic."""
@@ -86,6 +102,49 @@ def camera_locators(cam, overrides):
         out.append((f"ddr_bl{2 * n}", (x, y, cz - half_depth), FACE_NEG_Z))
         out.append((f"ddr_bl{2 * n + 1}", (x, y, cz + half_depth), FACE_POS_Z))
     return out
+
+
+def build_visors(base, stage, base_pmg):
+    """POC radar sun visors (see VISOR_POC): per truck and variant, copied stock models + LED locators."""
+    built = []
+    for truck, (def_rel, xs, y, z) in VISOR_POC.items():
+        with open(os.path.join(base, def_rel), encoding="utf-8") as fh:
+            stock = fh.read()
+        ext = re.search(r'exterior_model\s*:\s*"/?([^"]+)\.pmd"', stock).group(1)
+        intr = re.search(r'interior_model\s*:\s*"/?([^"]+)\.pmd"', stock).group(1)
+        keep = "".join(f"\t{line.strip()}\n" for line in stock.splitlines()
+                       if re.match(r"\s*(suitable_for|conflict_with)\[\]", line))
+        d = os.path.join(stage, "def", "vehicle", "truck", truck, "accessory", "sunshld")
+        os.makedirs(d, exist_ok=True)
+        for suffix, label, hookup in VISOR_VARIANTS:
+            leds_in = [(f"ddr_led{i}", (x, y, z), FACE_POS_Z, hookup) for i, x in enumerate(xs)]
+            leds_out = [(f"ddr_led{i}", (x, y, z), FACE_NEG_Z, hookup) for i, x in enumerate(xs)]
+            model = f"vehicle/truck/upgrade/ddradar/visor_{truck.replace('.', '_')}{suffix}"
+            for src, dst, locs in ((ext, model, leds_out + [CAB_AUX_EMITTER]), (intr, model + "_int", leds_in)):
+                shutil.copy(os.path.join(base, src + ".pmd"), os.path.join(stage, dst + ".pmd"))
+                with open(os.path.join(stage, dst + ".pmg"), "wb") as fh:
+                    fh.write(base_pmg(src).with_locators(locs))
+            unit = f"ddrvisor{suffix.lstrip('_')}"
+            with open(os.path.join(d, f"{unit}.sii"), "w", newline="\n") as fh:
+                fh.write(f"""SiiNunit
+{{
+accessory_addon_data : {unit}.{truck}.sunshld
+{{
+	name: "DriveDogs Radar sun visor{label}"
+	price: 2400
+	unlock: 0
+	icon: "truck/scania_2016/accessory/sunshld/stock"
+	part_type: aftermarket
+	electric_type: aux_light
+
+	exterior_model: "/{model}.pmd"
+	interior_model: "/{model}_int.pmd"
+
+{keep}}}
+}}
+""")
+            built.append(f"{truck}{label}")
+    return built
 
 
 def write_aux_parts(base, stage):
@@ -209,6 +268,7 @@ def main():
     with open(aux_dst + ".pmg", "wb") as fh:
         fh.write(base_pmg(CAB_UNIT_SRC).with_locators(AUX_PART_LOCATORS))
     aux_trucks = write_aux_parts(args.base, stage)
+    visors = build_visors(args.base, stage, base_pmg)
 
     # one unknown attribute makes the game drop a whole .sii file (round 5) - never pack that
     lint = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "lint_units.py"), "--base", args.base])
@@ -225,7 +285,7 @@ def main():
     with open(os.path.join(ROOT, "build", "placements.json"), "w", newline="\n") as fh:
         json.dump(placed, fh, indent=1)
     print(f"{len(placed)} camera models, cab unit for {len(trucks)} trucks, aux TEST part for "
-          f"{len(aux_trucks)} trucks -> {package} "
+          f"{len(aux_trucks)} trucks, radar sun visor POC: {', '.join(visors)} -> {package} "
           f"({os.path.getsize(package) // 1024} KB)")
 
 

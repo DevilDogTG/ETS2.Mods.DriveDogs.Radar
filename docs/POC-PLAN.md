@@ -97,7 +97,7 @@ Result 1.61: 707 cameras; Berlin = 30× `speed_camera_ch` (white pole + grey box
 ## Test checklist — v0.1.0-dev.1 (one session)
 
 Setup: remove `ddradar_spike1.scs` / `ddradar_spike2.scs` and older `drivedog_radar_v*.scs`; copy
-`drivedog_radar_v0.1.0-dev.8.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
+`drivedog_radar_v0.1.0-dev.9.scs` to the mod folder and enable it (needs **Toys DLC** — POC unit body).
 Keep Garage-j1 Radar disabled. Re-fit the windshield unit (saves still reference the removed spike part).
 
 **A. Camera strobe** (Berlin is ideal: 30 cameras)
@@ -166,6 +166,16 @@ dev.4 test matrix (all on the GPS body, roof aux TEST part fitted):
 | D | `flare_vehicle` (steady), aux | does aux drive a cab flare (without blink) |
 
 Beacon is **not** an alternative: same "lamp must be fitted" rule, and the owner uses it for special transport.
+
+### dev.9 - radar sun visor POC (owner chose option 1, 2026-10-08; Scania S first)
+
+- Owner always uses a sun visor; modded-visor support is a later topic. POC = copy of the Scania S
+  **stock** visor (`sunshld`, exterior slot) with 2 aux-blink LEDs (`flare.vehicle.ddr_blink`) on the front
+  lower edge (x = ±0.45): facing the driver in the interior model, forward in the exterior model, plus the
+  hidden aux emitter; `electric_type: aux_light`; stock `suitable_for` / `conflict_with` copied.
+- "DriveDogs Radar sun visor" (aux) + "… TEST A" (always on with the engine). Windshield unit stays for now.
+- Test: fit TEST A → LEDs visible from cab (cam 1) and front (cam 2) with the engine running? Then the main
+  visor: does it unlock roof aux by itself (remove the r_grill TEST part)? aux on → LEDs blink? Then plugin.
 
 ### Round 8 (dev.8, log `202610082229`) - interior-slot flares are not drawn in gameplay
 
