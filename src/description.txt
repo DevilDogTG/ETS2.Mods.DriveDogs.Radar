@@ -1,11 +1,7 @@
-[orange]DriveDogs: Radar[normal] - speed camera detector
+[orange]DriveDogs: Radar[normal] - speed camera strobes
 
 Every fining speed camera of the base game and all SCS map DLCs blinks a red police-style strobe,
-so you see it before it sees you. No sounds, no voice.
+so you see it before it sees you. No sounds, no truck parts.
 
-Windshield detector (truck accessory, windshield left-glass slot):
-- without the plugin: decoration only
-- with the optional DriveDogs Radar plugin (bin\win_x64\plugins): blinks when a camera is ahead.
-  The plugin drives the aux light state - do not bind/use aux lights yourself.
-
-POC build - camera flare placement is generated and still being verified in game.
+Want an "camera ahead" warning on a screen or LEDs? The DevDogs TruckSimulator SimHub plugin detects
+speed cameras from the same camera database (separate download).

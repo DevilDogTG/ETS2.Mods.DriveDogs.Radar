@@ -25,7 +25,6 @@ SCAN_DIRS = ("unit", "def/vehicle")
 # attributes not used by base data on that class but confirmed to load in game
 PROVEN = {
     "flare_blink": {"fade_distance", "fade_span"},          # ddradar.blink, rounds 2-4
-    "accessory_addon_data": {"electric_type"},              # base uses it on painted/other addon classes
 }
 
 

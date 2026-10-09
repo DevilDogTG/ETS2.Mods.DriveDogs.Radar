@@ -73,6 +73,14 @@ def main():
         w = csv.writer(fh, lineterminator="\n")
         w.writerow(["uid", "x", "y", "z", "unit", "model", "sector"])
         w.writerows(rows)
+    # The DB is copied into other repos (DevDogs.TruckSimulator SimHub plugin) - always state which
+    # game and game version it was extracted from, so a copy can be matched to the game it serves.
+    meta = {"game": "ets2", "game_version": os.path.basename(args.base.rstrip("/\\")),
+            "cameras": len(rows), "source": "DriveDogs Radar tools/extract_camera_db.py",
+            "columns": ["uid", "x", "y", "z", "unit", "model", "sector"],
+            "coordinates": "world space, metres - same as SCS telemetry truck.world.placement"}
+    with open(os.path.splitext(args.out)[0] + ".meta.json", "w", newline="\n") as fh:
+        json.dump(meta, fh, indent=1)
     print(f"{len(rows)} cameras placed on the map ({rejected} token hits rejected) -> {args.out}")
 
 

@@ -3,5 +3,6 @@ build/
 output/
 __pycache__/
 
-# SCS Telemetry SDK (SCS licence - unpack locally, never commit)
+
+# SCS Telemetry SDK unpacked for the removed C++ plugin (local only, SCS licence)
 plugin/sdk/

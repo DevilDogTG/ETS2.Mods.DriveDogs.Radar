@@ -1,0 +1,16 @@
+{
+ "game": "ets2",
+ "game_version": "1.61.1.1",
+ "cameras": 707,
+ "source": "DriveDogs Radar tools/extract_camera_db.py",
+ "columns": [
+  "uid",
+  "x",
+  "y",
+  "z",
+  "unit",
+  "model",
+  "sector"
+ ],
+ "coordinates": "world space, metres - same as SCS telemetry truck.world.placement"
+}
