@@ -3,7 +3,7 @@
 Working document for the proof of concept (owner + Claude only). Status as of 2026-10-07, game 1.61.
 
 > **Outcome (2026-10-09, [ADR-0001](adr/ADR-0001-strobe-only-mod-detection-in-simhub.md)):** the mod is
-> **strobe-only** (v0.2.0). Speed-camera detection + display move to the DevDogs.TruckSimulator SimHub
+> **strobe-only** (released as v1.0.0, 2026-10-10). Speed-camera detection + display move to the DevDogs.TruckSimulator SimHub
 > plugin (plan `speedcam-radar` in that project, after its .NET port passes testing). Everything below is
 > the POC record; the removed code lives at `12a5936`.
 

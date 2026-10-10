@@ -2,7 +2,3 @@
 build/
 output/
 __pycache__/
-
-
-# SCS Telemetry SDK unpacked for the removed C++ plugin (local only, SCS licence)
-plugin/sdk/
