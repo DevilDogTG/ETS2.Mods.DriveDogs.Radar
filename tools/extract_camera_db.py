@@ -20,7 +20,7 @@ import struct
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from scs_common import default_base, token  # noqa: E402
+from scs_common import base_game_version, default_base, token  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SIGN_ITEM = 36
@@ -75,7 +75,7 @@ def main():
         w.writerows(rows)
     # The DB is copied into other repos (DevDogs.TruckSimulator SimHub plugin) - always state which
     # game and game version it was extracted from, so a copy can be matched to the game it serves.
-    meta = {"game": "ets2", "game_version": os.path.basename(args.base.rstrip("/\\")),
+    meta = {"game": "ets2", "game_version": base_game_version(args.base),
             "cameras": len(rows), "source": "DriveDogs Radar tools/extract_camera_db.py",
             "columns": ["uid", "x", "y", "z", "unit", "model", "sector"],
             "coordinates": "world space, metres - same as SCS telemetry truck.world.placement"}

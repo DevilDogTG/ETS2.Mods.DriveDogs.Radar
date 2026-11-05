@@ -14,7 +14,7 @@ import struct
 import sys
 from pathlib import Path
 
-GAME_VERSION = "1.61.1.1"   # extracted reference used by the tools (override with --base)
+GAME_VERSION = "1.62"   # base reference used by the tools: <root>/base/<X.Y> (override with --base)
 _MEGAPACK = Path.home() / ".agent-brains/profiles/scs-mod-developer/skills/megapack/scripts"
 _REPO = Path(__file__).resolve().parent.parent
 
@@ -35,9 +35,18 @@ def megapack():
 
 
 def default_base():
-    """<this host's extracted reference root for the repo's game>/base/<GAME_VERSION> (from the host config)."""
+    """<this host's extracted reference root for the repo's game>/base/<X.Y of GAME_VERSION> (from the host config)."""
     mp = megapack()
-    return str(mp.reference_root(mp.repo_game(_REPO)) / "base" / GAME_VERSION)
+    return str(mp.base_dir(mp.reference_root(mp.repo_game(_REPO)), GAME_VERSION))
+
+
+def base_game_version(base):
+    """Full patch version of the game a base reference was extracted from (its _extract-meta.md game_version).
+
+    The reference folder is named by minor version only, but copies of the data (SimHub plugin) are matched to
+    the exact game version. Falls back to the folder name for a reference without meta.
+    """
+    return megapack().workshop.read_meta(Path(base)).get("game_version") or Path(base).name
 
 ALPHABET = "\0" + "0123456789abcdefghijklmnopqrstuvwxyz_"
 
