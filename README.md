@@ -3,7 +3,7 @@
 Euro Truck Simulator 2 mod: every **fining speed camera** of the base game and all SCS map DLCs blinks a
 red police-style strobe, so you see it before it sees you. No sounds, no truck parts, ~1.8 MB.
 
-- 69 camera models (every model the game fines with), 707 cameras placed on the map (ETS2 1.61).
+- 69 camera models (every model the game fines with), 707 cameras placed on the map (ETS2 1.62).
 - Only the cameras' `.pmg` files are overridden (strobe locators added); base models, collisions and
   materials are reused, so it does not conflict with truck, interior or map-look mods.
 

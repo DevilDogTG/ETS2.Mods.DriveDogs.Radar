@@ -1,5 +1,5 @@
 {
- "base": "1.61.1.1",
+ "base": "1.62.1.0",
  "cameras": [
   {
    "model": "model/sign/navigation/nl/stand/stand_portal_v05_hw2_cam_nl",

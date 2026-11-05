@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(__file__))
-from scs_common import Pmg, default_base, megapack  # noqa: E402
+from scs_common import Pmg, base_game_version, default_base, megapack  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SIGN_UNIT = re.compile(r"^\s*sign_model\s*:\s*([\w.]+)\s*\{(.*?)^\s*\}", re.M | re.S)
@@ -81,7 +81,7 @@ def main():
     cameras = find_camera_models(base, by_model)
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w", newline="\n") as fh:
-        json.dump({"base": os.path.basename(base.rstrip("/\\")),
+        json.dump({"base": base_game_version(base),
                    "cameras": [cameras[k] for k in sorted(cameras)]}, fh, indent=1)
     print(f"{len(cameras)} camera models (of {len(by_model)} sign models) -> {args.out}")
 
